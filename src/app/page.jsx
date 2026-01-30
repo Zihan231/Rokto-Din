@@ -1,3 +1,4 @@
+import FindDonor from "@/components/Find Donor/FindDonor";
 import Footer from "@/components/footer/Footer";
 import BannerSlider from "@/components/Hero Section/BannerSlider";
 import Navbar from "@/components/navBar/Navbar";
@@ -8,6 +9,7 @@ export default function Home() {
     <main>
       <Navbar></Navbar>
       <BannerSlider></BannerSlider>
+      <FindDonor></FindDonor>
       <Footer></Footer>
     </main>
   );
