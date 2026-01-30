@@ -1,26 +1,37 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "daisyui/theme" {
+  name: "rokto-din";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  /* Primary: #8A1119 (Deep Maroon) */
+  --color-primary: oklch(34.25% 0.147 25.43);
+  --color-primary-content: #ffffff;
+
+  /* Overall Background: #EAEFEF */
+  --color-base-200: #EAEFEF;
+  
+  /* Card/Nav Background: #FEFEFD */
+  --color-base-100: #FEFEFD;
+  --color-base-300: oklch(95% 0.01 25); 
+  
+  /* Text: Black (#000000) */
+  --color-base-content: #000000;
+
+  /* Footer Background: #2A2C2B */
+  --color-neutral: #2A2C2B;
+  --color-neutral-content: #ffffff;
+
+  /* Pill-shape styling from your UI Sample */
+  --radius-selector: 9999px; 
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Force the body to use your "Overall BG" color */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-base-200 text-base-content;
 }
