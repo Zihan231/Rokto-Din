@@ -134,7 +134,7 @@ const RegisterPage = () => {
                         </div>
 
                         {/* Optimized Date Picker Section */}
-                        <div className="p-6 bg-base-50 rounded-[2rem] border-2 border-dashed border-base-200 hover:border-primary/30 transition-colors">
+                        <div className="p-6 bg-base-50 rounded-4xl border-2 border-dashed border-base-200 hover:border-primary/30 transition-colors">
                             <label className="label font-bold text-neutral flex items-center gap-2 mb-2 italic">
                                 <Calendar size={18} className="text-primary" /> শেষ রক্তদানের তারিখ (ঐচ্ছিক)
                             </label>
@@ -216,7 +216,7 @@ const RegisterPage = () => {
 
                         {/* Submit Actions */}
                         <div className="pt-8 space-y-6">
-                            <button className="btn btn-primary btn-lg w-full rounded-[2rem] text-white shadow-2xl shadow-primary/30 border-none group h-16 font-black text-lg">
+                            <button className="btn btn-primary btn-lg w-full rounded-4xl text-white shadow-2xl shadow-primary/30 border-none group h-16 font-black text-lg">
                                 অ্যাকাউন্ট তৈরি করুন <ArrowRight size={22} className="ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                             </button>
 

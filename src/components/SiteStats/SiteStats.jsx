@@ -79,7 +79,7 @@ const SiteStats = () => {
                         </p>
 
                         {/* Divider Line (Desktop only) */}
-                        <div className="hidden lg:block absolute -right-2 top-1/4 h-1/2 w-[1px] bg-gray-100 last:hidden" />
+                        <div className="hidden lg:block absolute -right-2 top-1/4 h-1/2 w-px bg-gray-100 last:hidden" />
                     </motion.div>
                 ))}
             </motion.div>
