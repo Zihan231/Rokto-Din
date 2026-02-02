@@ -37,6 +37,7 @@ export default function FindDonorClient() {
         if (options.length === 1) {
             if (donor.phone) {
                 // Systems handle tel: links without leaving the page
+                // eslint-disable-next-line react-hooks/immutability
                 window.location.href = `tel:${donor.phone}`;
             }
             else if (donor.whatsapp) {
