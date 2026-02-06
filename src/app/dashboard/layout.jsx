@@ -1,21 +1,23 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'; // 1. Import usePathname
+import { usePathname } from 'next/navigation';
 import { 
     LayoutDashboard, User, History, 
-    LogOut, Menu, X, Droplets, Bell 
+    LogOut, Menu, X, Droplets, Bell, 
+    PlusCircle
 } from 'lucide-react';
 
 export default function DashboardLayout({ children }) {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
-    const pathname = usePathname(); // 2. Get current URL path
+    const pathname = usePathname();
 
-    const menuItems = [
-        { icon: <LayoutDashboard size={20} />, label: "ড্যাশবোর্ড", href: "/dashboard" },
-        { icon: <User size={20} />, label: "প্রোফাইল", href: "/dashboard/profile" },
-        { icon: <History size={20} />, label: "রক্তদানের ইতিহাস", href: "/dashboard/history" },
-    ];
+   const menuItems = [
+    { icon: <LayoutDashboard size={20} />, label: "ড্যাশবোর্ড", href: "/dashboard" },
+    { icon: <User size={20} />, label: "প্রোফাইল", href: "/dashboard/profile" },
+    { icon: <History size={20} />, label: "রক্তদানের ইতিহাস", href: "/dashboard/history" },
+    { icon: <PlusCircle size={20} />, label: "নতুন রক্তদান", href: "/dashboard/donation" }, 
+];
 
     return (
         <div className="flex h-screen bg-base-200 overflow-hidden">
