@@ -3,7 +3,6 @@ import FindDonorHome from "@/components/FindDonorHome/FindDonorHome";
 import HomePageSEO from "@/components/HomePageSEO/HomePageSEO";
 import SiteStats from "@/components/SiteStats/SiteStats";
 import HowItWorks from "@/components/HowItWorks/HowItWorks";
-import Loading from "../loading";
 
 export default function Home() {
   return (

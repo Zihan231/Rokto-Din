@@ -1,35 +1,31 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { Users, HeartHandshake, MapPin, Headset } from 'lucide-react';
 
 const SiteStats = () => {
-    const stats = [
+    const t = useTranslations('SiteStats');
+
+    // Configuration for icons and keys (text comes from JSON)
+    const statConfig = [
         {
-            id: 1,
-            label: "নিবন্ধিত ডোনার",
-            value: "১০কে+",
+            key: "donors",
             icon: <Users className="w-6 h-6" />,
             bg: "bg-red-50"
         },
         {
-            id: 2,
-            label: "সফল রক্তদান",
-            value: "৫কে+",
+            key: "donations",
             icon: <HeartHandshake className="w-6 h-6" />,
             bg: "bg-red-50"
         },
         {
-            id: 3,
-            label: "শহর কাভারেজ",
-            value: "৫০+",
+            key: "cities",
             icon: <MapPin className="w-6 h-6" />,
             bg: "bg-red-50"
         },
         {
-            id: 4,
-            label: "সাপোর্ট",
-            value: "২৪/৭",
+            key: "support",
             icon: <Headset className="w-6 h-6" />,
             bg: "bg-red-50"
         }
@@ -57,9 +53,9 @@ const SiteStats = () => {
                 viewport={{ once: true }}
                 className="bg-white border border-base-200 shadow-xl shadow-gray-200/40 rounded-[2.5rem] py-16 px-6 md:p-10 grid grid-cols-2 lg:grid-cols-4 gap-y-16 md:gap-y-10 gap-x-4"
             >
-                {stats.map((stat) => (
+                {statConfig.map((stat, index) => (
                     <motion.div 
-                        key={stat.id}
+                        key={index}
                         variants={itemVariants}
                         className="flex flex-col items-center text-center group relative"
                     >
@@ -70,16 +66,18 @@ const SiteStats = () => {
                         
                         {/* Value */}
                         <h4 className="text-3xl md:text-5xl font-black text-primary mb-2 tracking-tighter">
-                            {stat.value}
+                            {t(`${stat.key}.value`)}
                         </h4>
                         
                         {/* Label */}
                         <p className="text-gray-500 font-bold text-[10px] md:text-xs uppercase tracking-[0.2em]">
-                            {stat.label}
+                            {t(`${stat.key}.label`)}
                         </p>
 
-                        {/* Divider Line (Desktop only) */}
-                        <div className="hidden lg:block absolute -right-2 top-1/4 h-1/2 w-px bg-gray-100 last:hidden" />
+                        {/* Divider Line (Desktop only) - Hides on the last item */}
+                        {index !== statConfig.length - 1 && (
+                            <div className="hidden lg:block absolute -right-2 top-1/4 h-1/2 w-px bg-gray-100" />
+                        )}
                     </motion.div>
                 ))}
             </motion.div>

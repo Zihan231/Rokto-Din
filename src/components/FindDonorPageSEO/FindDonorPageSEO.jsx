@@ -1,26 +1,27 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Search, UserPlus, Droplets, ShieldCheck } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Search, UserPlus, ShieldCheck } from 'lucide-react';
 
 const FindDonorPageSEO = () => {
-    const features = [
+    const t = useTranslations('FindDonorPageSEO');
+
+    // Define features with keys matching the JSON structure
+    const featuresList = [
         {
+            key: "search",
             icon: <Search className="w-8 h-8" />,
-            title: "সহজে রক্তদাতা খুঁজুন",
-            desc: "আপনার এলাকা এবং রক্তের গ্রুপ অনুযায়ী কয়েক সেকেন্ডেই নিকটস্থ ডোনার খুঁজে পান।",
             color: "text-blue-600 bg-blue-50"
         },
         {
+            key: "join",
             icon: <UserPlus className="w-8 h-8" />,
-            title: "ডোনার হিসেবে যুক্ত হন",
-            desc: "আপনার সামান্য রক্ত দানে বাঁচতে পারে একটি প্রাণ। আজই আমাদের কমিউনিটিতে ডোনার হিসেবে নিবন্ধিত হোন।",
             color: "text-primary bg-primary/10"
         },
         {
+            key: "secure",
             icon: <ShieldCheck className="w-8 h-8" />,
-            title: "নিরাপদ ও বিশ্বস্ত",
-            desc: "আমরা ডোনারদের তথ্য যাচাই করি এবং গোপনীয়তা বজায় রেখে রক্তদাতা ও গ্রহীতাদের মধ্যে সেতুবন্ধন তৈরি করি।",
             color: "text-green-600 bg-green-50"
         }
     ];
@@ -36,7 +37,7 @@ const FindDonorPageSEO = () => {
                         whileInView={{ opacity: 1 }}
                         className="text-primary font-bold tracking-widest uppercase text-sm"
                     >
-                        কেন আমাদের বেছে নিবেন?
+                        {t('header.tag')}
                     </motion.span>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
@@ -44,16 +45,19 @@ const FindDonorPageSEO = () => {
                         transition={{ delay: 0.2 }}
                         className="text-3xl md:text-5xl font-black text-neutral mt-4 mb-6 leading-tight"
                     >
-                        জীবন বাঁচাতে <span className="text-primary underline decoration-primary/20 underline-offset-8">Rokto Din</span> আপনার পাশে
+                        {/* Rich text for highlighting 'Rokto Din' */}
+                        {t.rich('header.title', {
+                            highlight: (chunks) => <span className="text-primary underline decoration-primary/20 underline-offset-8">{chunks}</span>
+                        })}
                     </motion.h2>
                     <p className="text-gray-500 text-lg font-medium leading-relaxed">
-                        আমরা রক্তদাতা এবং গ্রহীতাদের মধ্যে একটি দ্রুত ও নিরাপদ প্ল্যাটফর্ম সরবরাহ করি, যা জরুরি অবস্থায় জীবনের ঝুঁকি কমাতে সাহায্য করে।
+                        {t('header.description')}
                     </p>
                 </div>
 
                 {/* Features Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-                    {features.map((feature, index) => (
+                    {featuresList.map((feature, index) => (
                         <motion.article
                             key={index}
                             initial={{ opacity: 0, y: 30 }}
@@ -66,21 +70,19 @@ const FindDonorPageSEO = () => {
                                 {feature.icon}
                             </div>
                             <h3 className="text-2xl font-bold text-neutral mb-4 group-hover:text-primary transition-colors">
-                                {feature.title}
+                                {t(`features.${feature.key}.title`)}
                             </h3>
                             <p className="text-gray-500 leading-relaxed font-medium">
-                                {feature.desc}
+                                {t(`features.${feature.key}.desc`)}
                             </p>
 
                             <div className="mt-8 flex items-center text-primary font-bold text-sm cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-                                আরও জানুন
+                                {t('learnMore')}
                                 <span className="ml-2 transform translate-x-0 group-hover:translate-x-2 transition-transform">→</span>
                             </div>
                         </motion.article>
                     ))}
                 </div>
-
-                
 
             </div>
         </section>

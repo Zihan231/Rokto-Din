@@ -1,0 +1,357 @@
+{
+  "ContactPage": {
+    "header": {
+      "titleStart": "Contact",
+      "titleEnd": "Us",
+      "description": "Let us know if you have any questions or suggestions. Our team is ready to help you."
+    },
+    "form": {
+      "emailLabel": "Your Email",
+      "emailPlaceholder": "example@mail.com",
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "What do you want to know?",
+      "messageLabel": "Your Message",
+      "messagePlaceholder": "Write your message in detail here...",
+      "securityNote": "* Your information will remain safe.",
+      "submitBtn": "Send Message"
+    },
+    "info": {
+      "emailTitle": "Email Address",
+      "phoneTitle": "Phone Number",
+      "addressTitle": "Address",
+      "addressDetail": "Dhaka, Bangladesh",
+      "responseTime": "We usually reply to all messages within <highlight>24 hours</highlight>."
+    }
+  },
+
+"AboutPage": {
+    "hero": {
+      "title": "Building <highlight>Unity</highlight> through Blood Ties, We are Tomorrow's Reliable <highlight>Humanity</highlight>",
+      "description": "<bold>Rokto Din</bold> is a modern and transparent online blood donation platform in Bangladesh. Our goal is to bridge the gap between donors and recipients through technology and ensure rapid blood supply for every critical patient."
+    },
+    "why": {
+      "tag": "Why Our Platform?",
+      "title": "A Unique Fusion of Technology and <highlight>Humanity</highlight>",
+      "description": "<bold>Rokto Din</bold> is not just a website; it's an ecosystem designed to save lives through data accuracy and speed. We believe in direct action, reducing the long wait times of traditional social media posts.",
+      "metricVal": "5,000",
+      "metricLabel": "Verified Donors",
+      "features": {
+        "database": {
+          "title": "Smart Campus Database",
+          "desc": "A vast network of thousands of verified donors from the country's top universities and colleges."
+        },
+        "privacy": {
+          "title": "Data Privacy & Security",
+          "desc": "Protecting donor personal information is our top priority. No third-party access allowed."
+        },
+        "location": {
+          "title": "Location-Based Instant Search",
+          "desc": "Find blood donors in your nearby area within seconds by filtering through divisions and districts."
+        },
+        "support": {
+          "title": "24/7 Emergency Support",
+          "desc": "Our community and volunteer team are always ready to stand by you in times of urgent need."
+        }
+      }
+    },
+    "team": {
+      "backgroundText": "Team",
+      "title": "Our Core <highlight>Strength</highlight>",
+      "subtitle": "The Visionaries Behind Rokto Din",
+      "members": {
+        "zihan": {
+          "name": "MD. Zihaul Islam Zihan",
+          "role": "Full-Stack Developer & Founder",
+          "desc": "As a CSE student, he is the architect behind the site's complete technical infrastructure and user experience."
+        },
+        "emtiaz": {
+          "name": "Fazle Rabbi Emtiaz",
+          "role": "Head of Marketing & Outreach",
+          "desc": "He is the mastermind behind platform promotion, donor engagement, and strengthening the community network."
+        }
+      }
+    },
+    "impact": {
+      "title": "Our <highlight>Pledge</highlight> & Achievements",
+      "stats": {
+        "free": {
+          "val": "100%",
+          "label": "Free Service",
+          "desc": "A completely humanitarian initiative with no hidden charges."
+        },
+        "active": {
+          "val": "24/7",
+          "label": "Active Network",
+          "desc": "Ready to respond instantly at any moment, day or night."
+        },
+        "verified": {
+          "val": "Verified",
+          "label": "Donor List",
+          "desc": "Every piece of data is strictly verified and secured."
+        }
+      }
+    },
+    "cta": {
+      "title": "Let's Stand as a <highlight>Shield</highlight> in Times of Crisis",
+      "description": "Your one-minute decision can be the reason for someone's lifetime of smiles. Register your name in Bangladesh's fastest blood donor network today.",
+      "joinBtn": "Join Now",
+      "findBtn": "Find Donors",
+      "badges": {
+        "secure": "Secure Data",
+        "donors": "5000+ Donors",
+        "support": "Instant Support"
+      }
+    }
+  },
+  "FindDonorPage": {
+    "metadata": {
+      "title": "Find Blood Donors | Rokto Din",
+      "description": "Use Rokto Din to find blood donors quickly in your area. Donate blood to save lives."
+    },
+    "header": {
+      "title": "Find <highlight>Blood Donors</highlight> in Your Area",
+      "description": "Finding a blood donor in an emergency is now easier. Search for trusted blood donors near you in our database."
+    }
+  },
+  "FindDonorPageSEO": {
+    "header": {
+      "tag": "Why Choose Us?",
+      "title": "<highlight>Rokto Din</highlight> is With You to Save Lives",
+      "description": "We provide a fast and secure platform between blood donors and recipients, helping to reduce risks in emergencies."
+    },
+    "features": {
+      "search": {
+        "title": "Find Donors Easily",
+        "desc": "Find the nearest donor within seconds based on your area and blood group."
+      },
+      "join": {
+        "title": "Join as a Donor",
+        "desc": "Your small donation can save a life. Register as a donor in our community today."
+      },
+      "secure": {
+        "title": "Safe & Trusted",
+        "desc": "We verify donor information and build a bridge between donors and recipients while maintaining privacy."
+      }
+    },
+    "learnMore": "Learn More"
+  },
+  "HeroBanner": {
+    "tagline": "Voluntary Blood Donation Saves Lives",
+    "title": {
+      "part1": "Donate Blood,",
+      "part2": "Save Life."
+    },
+    "description": "Donating blood is a noble act. Your small donation can save a precious life. Find donors easily through the <highlight>Rokto Din</highlight> app.",
+    "buttons": {
+      "needBlood": "Need Blood",
+      "beDonor": "Be a Donor"
+    }
+  },
+  "FindDonor": {
+    "title": "Find Blood Donors <highlight>In Your Area</highlight>",
+    "subtitle": "Get donor information quickly by filling out the form below",
+    "form": {
+      "bloodGroup": "Blood Group",
+      "selectGroup": "Select Group",
+      "division": "Division",
+      "selectDivision": "Select Division",
+      "district": "District",
+      "selectDistrict": "Select District",
+      "searchBtn": "Search"
+    }
+  },
+  "HomePageSEO": {
+    "intro": {
+      "title": "Why Donate Blood and <highlight>Its Importance</highlight>",
+      "description": "Blood donation is not just a humanitarian act; it is a life-saving measure. One bag of your blood can save the life of an accident victim, a thalassemia patient, or a mother facing complications during childbirth."
+    },
+    "pillars": {
+      "health": {
+        "title": "Health Benefits",
+        "desc": "Regular blood donation maintains iron balance in the body. It helps reduce the risk of heart disease and cancer."
+      },
+      "cells": {
+        "title": "New Blood Cells",
+        "desc": "After donating blood, the body produces new blood cells, which increases immunity and vitality."
+      },
+      "mind": {
+        "title": "Mental Satisfaction",
+        "desc": "The spiritual peace of saving a dying person's life cannot be found through any other work."
+      }
+    },
+    "details": {
+      "qualification": {
+        "title": "General Eligibility for Donors",
+        "list": {
+          "age": "Age must be between 18 and 60 years.",
+          "weight": "Weight must be at least 50 kg or more.",
+          "hemoglobin": "Hemoglobin levels must be correct.",
+          "interval": "At least 4 months must have passed since the last donation."
+        }
+      },
+      "advice": {
+        "title": "What to Do Before & After Donation",
+        "desc": "It is important to eat nutritious food and drink enough water before donating blood. Rest for at least 10-15 minutes after donation and avoid heavy work for the next few hours. Your slight awareness will make the donation process easy and safe."
+      }
+    },
+    "quote": "\"Your Blood, Someone Else's Power to Live\""
+  },
+  "SiteStats": {
+    "donors": {
+      "value": "10K+",
+      "label": "Registered Donors"
+    },
+    "donations": {
+      "value": "5K+",
+      "label": "Donations"
+    },
+    "cities": {
+      "value": "50+",
+      "label": "Cities Covered"
+    },
+    "support": {
+      "value": "24/7",
+      "label": "Support"
+    }
+  },
+  "HowItWorks": {
+    "heading": {
+      "title": "<highlight>How</highlight> We Work",
+      "subtitle": "Ensuring transparency and fast service is our main goal. Learn how we find blood donors for your needs."
+    },
+    "steps": {
+      "collection": {
+        "title": "Campus Data Collection",
+        "desc": "We collect donor information directly from various colleges and universities across the country."
+      },
+      "registration": {
+        "title": "Voluntary Registration",
+        "desc": "Anyone can create an account and become a donor by providing their name, address, and contact info."
+      },
+      "verification": {
+        "title": "Data Verification",
+        "desc": "Our team carefully verifies every donor's information before listing it on the website."
+      },
+      "search": {
+        "title": "Easy Donor Search",
+        "desc": "Contact the desired blood donor directly within a few clicks during critical moments."
+      }
+    },
+    "cta": {
+      "title": "Do you want to be a <highlight>Representative</highlight> of your campus?",
+      "subtitle": "Contact us to add your institution's donor list to our database.",
+      "button": "Contact Us"
+    }
+  },
+  "FindDonorClient": {
+    "form": {
+      "bloodGroup": "Blood Group",
+      "selectGroup": "Select Group",
+      "division": "Division",
+      "selectDivision": "Select Division",
+      "district": "District",
+      "selectDistrict": "Select District",
+      "searchBtn": "Search"
+    },
+    "results": {
+      "title": "Search Results",
+      "countText": "donors found",
+      "lastDonation": "Last Donation:",
+      "contactBtn": "Contact Donor"
+    },
+    "modal": {
+      "title": "Contact Method",
+      "subtitle": "Contact with {name}",
+      "call": "Call Now",
+      "whatsapp": "WhatsApp",
+      "facebook": "Facebook"
+    }
+  },
+  "Footer": {
+    "moto": "Voluntary blood donation saves lives. Our main goal is to build a bridge between blood donors and recipients. One bag of your blood can give a new life.",
+    "quickLinks": "Quick Links",
+    "connectWithUs": "Connect With Us",
+    "links": {
+      "home": "Home",
+      "findDonors": "Find Donors",
+      "blog": "Blog",
+      "about": "About Us",
+      "contact": "Contact"
+    },
+    "copyright": "© {year} <bold>Rokto Din</bold>. All Rights Reserved.",
+    "designedBy": "Designed with ❤️ by <highlight>Zihaul Islam Zihan</highlight>"
+  },
+ "LoginPage": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Enter your account details",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "example@mail.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "forgotPassword": "Forgot Password?",
+      "submitBtn": "Login",
+      "orDivider": "Or Login with Google",
+      "googleBtn": "Google Login"
+    },
+    "welcome": {
+      "titleLine1": "Welcome to",
+      "titleHighlight": "Rokto Din!",
+      "desc": "Your small step can save a precious life.",
+      "newDonor": "Want to be a new donor?",
+      "registerBtn": "Register Now",
+      "fastAccount": "Create an account in just 2 minutes"
+    }
+  },
+  "RegisterPage": {
+    "brand": {
+      "title": "Become a <highlight>Hero</highlight> Today",
+      "features": {
+        "database": {
+          "title": "Secure Database",
+          "desc": "Your data remains encrypted with us."
+        },
+        "contact": {
+          "title": "Easy Contact",
+          "desc": "Direct contact facility in case of emergency."
+        },
+        "search": {
+          "title": "Fast Service",
+          "desc": "Quick donor search with smart filters."
+        }
+      },
+      "alreadyMember": "Already a member?",
+      "loginBtn": "Login"
+    },
+    "form": {
+      "title": "Register",
+      "subtitle": "Create a new account as a blood donor",
+      "secureBadge": "Secure Registration",
+      "nameLabel": "Full Name",
+      "namePlaceholder": "Ex: Ariyan Rahman",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "mail@example.com",
+      "divisionLabel": "Division",
+      "selectDivision": "Select Division",
+      "districtLabel": "District",
+      "selectDistrict": "Select District",
+      "lastDonationLabel": "Last Donation Date (Optional)",
+      "newDonorNote": "* Leave this blank if you are a new donor.",
+      "bloodGroupLabel": "Blood Group",
+      "contactMethodsLabel": "Contact Methods (Multi-select)",
+      "methods": {
+        "phone": "Phone",
+        "whatsapp": "WhatsApp",
+        "facebook": "Facebook"
+      },
+      "placeholders": {
+        "phone": "Enter your phone number",
+        "whatsapp": "Enter WhatsApp number",
+        "facebook": "Enter Facebook Profile URL"
+      },
+      "submitBtn": "Create Account",
+      "orDivider": "Or with Google Account",
+      "googleBtn": "Continue with Google"
+    }
+  }
+}

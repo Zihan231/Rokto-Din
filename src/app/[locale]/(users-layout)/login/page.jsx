@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Mail, Lock, Eye, EyeOff, Droplets, UserPlus, ArrowRightCircle, ArrowRight } from 'lucide-react';
 
 const LoginPage = () => {
+    const t = useTranslations('LoginPage');
     const [showPassword, setShowPassword] = useState(false);
 
     return (
@@ -20,27 +21,27 @@ const LoginPage = () => {
                                 <Droplets className="text-primary w-8 h-8" />
                             </div>
                         </div>
-                        <h3 className="text-3xl font-black text-neutral mb-2 tracking-tight">লগইন করুন</h3>
-                        <p className="text-gray-500 font-medium">আপনার অ্যাকাউন্টের তথ্য দিন</p>
+                        <h3 className="text-3xl font-black text-neutral mb-2 tracking-tight">{t('login.title')}</h3>
+                        <p className="text-gray-500 font-medium">{t('login.subtitle')}</p>
                     </div>
 
                     <form className="space-y-5">
                         <div className="form-control w-full">
-                            <label className="label"><span className="label-text font-bold text-neutral">ইমেইল এড্রেস</span></label>
+                            <label className="label"><span className="label-text font-bold text-neutral">{t('login.emailLabel')}</span></label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400"><Mail size={20} /></div>
-                                <input type="email" placeholder="example@mail.com" className="input input-bordered w-full pl-12 rounded-2xl focus:outline-primary bg-base-100 border-base-200" />
+                                <input type="email" placeholder={t('login.emailPlaceholder')} className="input input-bordered w-full pl-12 rounded-2xl focus:outline-primary bg-base-100 border-base-200" />
                             </div>
                         </div>
 
                         <div className="form-control w-full">
                             <div className="flex justify-between items-center mb-1">
-                                <label className="label py-0"><span className="label-text font-bold text-neutral">পাসওয়ার্ড</span></label>
-                                <Link href="/forgot-password" size="sm" className="text-xs font-bold text-primary hover:underline">পাসওয়ার্ড ভুলে গেছেন?</Link>
+                                <label className="label py-0"><span className="label-text font-bold text-neutral">{t('login.passwordLabel')}</span></label>
+                                <Link href="/forgot-password" size="sm" className="text-xs font-bold text-primary hover:underline">{t('login.forgotPassword')}</Link>
                             </div>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400"><Lock size={20} /></div>
-                                <input type={showPassword ? "text" : "password"} placeholder="••••••••" className="input input-bordered w-full pl-12 pr-12 rounded-2xl focus:outline-primary bg-base-100 border-base-200" />
+                                <input type={showPassword ? "text" : "password"} placeholder={t('login.passwordPlaceholder')} className="input input-bordered w-full pl-12 pr-12 rounded-2xl focus:outline-primary bg-base-100 border-base-200" />
                                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400">
                                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                 </button>
@@ -48,11 +49,11 @@ const LoginPage = () => {
                         </div>
 
                         <button className="btn btn-primary btn-lg w-full rounded-2xl text-white shadow-lg shadow-primary/20 mt-4 gap-3 border-none">
-                            <ArrowRightCircle size={22} /> লগইন করুন
+                            <ArrowRightCircle size={22} /> {t('login.submitBtn')}
                         </button>
                     </form>
 
-                    <div className="divider my-8 text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">অথবা গুগল দিয়ে</div>
+                    <div className="divider my-8 text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">{t('login.orDivider')}</div>
 
                     <Link href="/dashboard" className="btn btn-outline border-base-200 w-full rounded-2xl gap-4 font-bold hover:bg-neutral hover:text-white transition-all">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
@@ -61,7 +62,7 @@ const LoginPage = () => {
                             <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
                             <path fill="#1976D2" d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
                         </svg>
-                        গুগল লগইন
+                        {t('login.googleBtn')}
                     </Link>
                 </div>
 
@@ -75,12 +76,15 @@ const LoginPage = () => {
                         <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mb-8 border border-primary/30">
                             <Droplets className="text-primary w-10 h-10" />
                         </div>
+                        
+                        {/* Title Split into 2 spans using 'block' to create new line */}
                         <h2 className="text-5xl font-black mb-6 leading-tight tracking-tight">
-                            স্বাগতম, <br />
-                            <span className="text-primary italic">Rokto Din</span>-এ!
+                            <span className="block">{t('welcome.titleLine1')}</span>
+                            <span className="text-primary italic">{t('welcome.titleHighlight')}</span>
                         </h2>
+                        
                         <p className="text-gray-400 text-lg leading-relaxed max-w-xs font-medium">
-                            আপনার একটি ছোট পদক্ষেপ বাঁচাতে পারে একটি মূল্যবান প্রাণ।
+                            {t('welcome.desc')}
                         </p>
                     </div>
 
@@ -91,16 +95,16 @@ const LoginPage = () => {
                                 <UserPlus className=" w-6 h-6" />
                             </div>
                             <p className="text-xs font-bold uppercase tracking-[0.2em] mb-2">
-                                নতুন ডোনার হতে চান?
+                                {t('welcome.newDonor')}
                             </p>
                             <Link href="/register" className="w-full">
                                 <button className="btn btn-primary w-full h-14 rounded-2xl text-white border-none shadow-xl shadow-primary/20 group hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
-                                    <span className="font-black tracking-wide">নিবন্ধন করুন</span>
+                                    <span className="font-black tracking-wide">{t('welcome.registerBtn')}</span>
                                     <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform duration-300" />
                                 </button>
                             </Link>
                             <p className="text-[10px] text-gray-500 mt-4 font-bold uppercase tracking-widest">
-                                মাত্র ২ মিনিটে অ্যাকাউন্ট খুলুন
+                                {t('welcome.fastAccount')}
                             </p>
                         </div>
                     </div>
