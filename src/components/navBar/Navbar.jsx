@@ -1,11 +1,29 @@
-import React from 'react';
+"use client";
+import React, { useTransition } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-// Added specific medical and UI icons
-import { HiOutlineGlobeAlt, HiOutlineHome, HiOutlineSearch, HiOutlineDocumentText, HiOutlineInformationCircle, HiOutlineMail } from "react-icons/hi";
+import { useLocale } from 'next-intl';
+import { usePathname, useRouter } from '@/i18n/navigation.js';
+import { 
+  HiOutlineGlobeAlt, HiOutlineHome, HiOutlineSearch, 
+  HiOutlineDocumentText, HiOutlineInformationCircle, HiOutlineMail 
+} from "react-icons/hi";
 import { RiUserSharedLine, RiLoginCircleLine } from "react-icons/ri";
 
 const Navbar = () => {
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
+
+  // Language Switch Logic
+  const handleLanguageSwitch = () => {
+    const nextLocale = locale === 'en' ? 'bn' : 'en';
+    startTransition(() => {
+      router.replace(pathname, { locale: nextLocale });
+    });
+  };
+
   const navLinks = (
     <>
       <li>
@@ -66,10 +84,17 @@ const Navbar = () => {
         <div className="navbar-end gap-2 md:gap-4">
           
           {/* Language Switcher */}
-          <button className="btn btn-ghost btn-circle text-base-content hover:text-primary transition-colors" title="Switch Language">
+          <button 
+            onClick={handleLanguageSwitch}
+            disabled={isPending}
+            className="btn btn-ghost btn-circle text-base-content hover:text-primary transition-colors" 
+            title="Switch Language"
+          >
             <div className="flex flex-col items-center">
               <HiOutlineGlobeAlt className="text-2xl" />
-              <span className="text-[10px] font-bold uppercase">EN</span>
+              <span className="text-[10px] font-bold uppercase">
+                {locale === 'en' ? 'BN' : 'EN'}
+              </span>
             </div>
           </button>
 

@@ -353,5 +353,111 @@
       "orDivider": "Or with Google Account",
       "googleBtn": "Continue with Google"
     }
+  },
+  "DashboardPage": {
+    "welcome": {
+      "greeting": "Assalamu Alaikum, {name}! 👋",
+      "message": "Thank you for standing by humanity. Every donation you make saves a life.",
+      "yourGroup": "Your Group"
+    },
+    "status": {
+      "ready": "Ready to donate blood",
+      "waiting": "You can donate again in <highlight>{days}</highlight> days"
+    },
+    "stats": {
+      "totalDonation": "Total Donation",
+      "times": "{count} times",
+      "lastDonation": "Last Donation",
+      "currentStatus": "Current Status"
+    },
+    "activity": {
+      "title": "Recent Activity",
+      "viewAll": "View All",
+      "headers": {
+        "date": "Date",
+        "hospital": "Hospital",
+        "quantity": "Quantity (Bag)"
+      },
+      "bagCount": "{count} Bag"
+    }
+  },
+  "DashboardLayout": {
+    "menu": {
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "history": "Donation History",
+      "newDonation": "New Donation",
+      "logout": "Logout"
+    },
+    "header": {
+      "dashboardTitle": "My Dashboard",
+      "donorName": "{name}",
+      "donorRole": "Blood Donor"
+    }
+  },
+  "ProfilePage": {
+    "role": "Verified Donor",
+    "editBtn": "Edit Info",
+    "missingInfo": "Information not provided",
+    "stats": {
+      "bloodGroup": "Blood Group",
+      "available": "Willing to Donate",
+      "unavailable": "Paused",
+      "totalDonation": "Total Donation",
+      "totalUnit": "Times",
+      "lastDonation": "Last Donation"
+    },
+    "contact": {
+      "title": "Contact Information",
+      "phone": "Mobile Number",
+      "whatsapp": "WhatsApp",
+      "facebook": "Facebook",
+      "email": "Email Address",
+      "address": "Current Address"
+    },
+    "modal": {
+      "title": "Update Information",
+      "subtitle": "Keep your contact info up to date",
+      "cancel": "Cancel",
+      "save": "Save Changes",
+      "labels": {
+        "name": "Full Name",
+        "bloodGroup": "Blood Group",
+        "contactMethod": "Contact Methods",
+        "phone": "Mobile Number",
+        "phonePlaceholder": "ex: +8801...",
+        "whatsapp": "WhatsApp",
+        "whatsappPlaceholder": "WhatsApp Number",
+        "facebook": "Facebook Link",
+        "facebookPlaceholder": "Facebook Profile URL or Username",
+        "email": "Email Address",
+        "address": "Current Address"
+      }
+    }
+  },
+  "HistoryPage": {
+    "title": "Donation History",
+    "subtitle": "Records of your noble deeds are saved below.",
+    "downloadBtn": "Download Record",
+    "searchPlaceholder": "Search Hospital...",
+    "table": {
+      "date": "Date",
+      "hospital": "Hospital",
+      "quantity": "Quantity (Bag)",
+      "bagUnit": "{count} Bag"
+    }
+  },
+  "DonationEntryForm": {
+    "title": "Add New Donation",
+    "subtitle": "Save the details of your noble deed",
+    "form": {
+      "dateLabel": "Donation Date",
+      "hospitalLabel": "Hospital Name",
+      "hospitalPlaceholder": "Ex: Dhaka Medical College",
+      "quantityLabel": "Quantity (Bag)",
+      "bagUnit": "{count} Bag",
+      "saveBtn": "Save Record",
+      "saving": "Saving..."
+    }
   }
 }

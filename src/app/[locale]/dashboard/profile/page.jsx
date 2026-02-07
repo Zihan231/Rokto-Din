@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { 
     Mail, Phone, MapPin, Calendar, 
     Edit, ShieldCheck, 
@@ -9,18 +10,19 @@ import {
 } from 'lucide-react';
 
 const ProfilePage = () => {
-    // 1. User Data State
+    const t = useTranslations('ProfilePage');
+
+    // 1. User Data State (Mock Data)
     const [user, setUser] = useState({
         name: "MD. Zihaul Islam Zihan",
-        role: "ভেরিফাইড ডোনার",
+        role: "Verified Donor", // This could be dynamic based on backend role
         bloodGroup: "O+",
-        totalDonation: "০৪",
-        lastDonation: "১২ জানুয়ারি ২০২৬",
+        totalDonation: "04",
+        lastDonation: "12 Jan 2026",
         email: "zihan@example.com",
-        address: "টঙ্গী, কলেজ গেট, গাজীপুর - ঢাকা",
-        // Contacts
+        address: "Tongi, College Gate, Gazipur - Dhaka",
         phone: "+880 1712 345678",
-        whatsapp: "", // Empty to test the missing message logic
+        whatsapp: "", 
         facebook: "facebook.com/zihan.dev",
     });
 
@@ -50,7 +52,7 @@ const ProfilePage = () => {
     // Helper to render contact info or missing message
     const renderContactValue = (value) => {
         if (!value || value.trim() === "") {
-            return <span className="text-red-400 text-sm italic font-medium">আপনি তথ্য প্রদান করেননি</span>;
+            return <span className="text-red-400 text-sm italic font-medium">{t('missingInfo')}</span>;
         }
         return <span className="font-bold text-neutral text-lg">{value}</span>;
     };
@@ -68,14 +70,14 @@ const ProfilePage = () => {
                         <ShieldCheck className="text-blue-500 fill-blue-50" size={24} />
                     </div>
                     <p className="text-gray-500 font-medium flex items-center gap-2">
-                        <User size={16} /> {user.role}
+                        <User size={16} /> {t('role')}
                     </p>
                 </div>
                 <button 
                     onClick={handleEditClick}
                     className="btn btn-neutral rounded-2xl text-white px-6 shadow-lg shadow-gray-200 hover:scale-105 transition-transform"
                 >
-                    <Edit size={18} /> এডিট তথ্য
+                    <Edit size={18} /> {t('editBtn')}
                 </button>
             </div>
 
@@ -88,10 +90,10 @@ const ProfilePage = () => {
                 >
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-10 -mt-10 blur-2xl group-hover:scale-150 transition-transform duration-700" />
                     <div className="relative z-10 flex flex-col items-center text-center">
-                        <p className="font-bold opacity-80 uppercase tracking-widest text-xs mb-4">রক্তের গ্রুপ</p>
+                        <p className="font-bold opacity-80 uppercase tracking-widest text-xs mb-4">{t('stats.bloodGroup')}</p>
                         <h2 className="text-6xl font-black mb-2">{user.bloodGroup}</h2>
                         <div className="mt-4 bg-white/10 p-1 pl-4 rounded-full flex items-center gap-3 backdrop-blur-sm border border-white/20">
-                            <span className="text-xs font-bold">{isAvailable ? 'ডোনেট করতে ইচ্ছুক' : 'বিরতি'}</span>
+                            <span className="text-xs font-bold">{isAvailable ? t('stats.available') : t('stats.unavailable')}</span>
                             <input 
                                 type="checkbox" 
                                 className="toggle toggle-sm border-white bg-white hover:bg-gray-100 checked:bg-emerald-400 checked:border-emerald-400"
@@ -107,8 +109,8 @@ const ProfilePage = () => {
                     <div className="w-14 h-14 bg-red-50 text-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <HeartHandshake size={28} />
                     </div>
-                    <h3 className="text-4xl font-black text-neutral mb-1">{user.totalDonation} <span className="text-lg text-gray-400">বার</span></h3>
-                    <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">মোট রক্তদান</p>
+                    <h3 className="text-4xl font-black text-neutral mb-1">{user.totalDonation} <span className="text-lg text-gray-400">{t('stats.totalUnit')}</span></h3>
+                    <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">{t('stats.totalDonation')}</p>
                 </div>
 
                 {/* Last Donation */}
@@ -117,13 +119,13 @@ const ProfilePage = () => {
                         <Calendar size={28} />
                     </div>
                     <h3 className="text-2xl font-black text-neutral mb-1">{user.lastDonation}</h3>
-                    <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">শেষ রক্তদান</p>
+                    <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">{t('stats.lastDonation')}</p>
                 </div>
             </div>
 
-            {/* --- 3. Contact Info (UPDATED with 3 Fields) --- */}
+            {/* --- 3. Contact Info --- */}
             <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-base-200 shadow-sm">
-                <h3 className="text-xl font-black text-neutral mb-8 border-b border-base-100 pb-4">যোগাযোগের তথ্য</h3>
+                <h3 className="text-xl font-black text-neutral mb-8 border-b border-base-100 pb-4">{t('contact.title')}</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     
@@ -133,7 +135,7 @@ const ProfilePage = () => {
                             <Phone size={20} />
                         </div>
                         <div>
-                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">মোবাইল নাম্বার</p>
+                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">{t('contact.phone')}</p>
                             {renderContactValue(user.phone)}
                         </div>
                     </div>
@@ -144,7 +146,7 @@ const ProfilePage = () => {
                             <MessageCircle size={20} />
                         </div>
                         <div>
-                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">WhatsApp</p>
+                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">{t('contact.whatsapp')}</p>
                             {renderContactValue(user.whatsapp)}
                         </div>
                     </div>
@@ -155,7 +157,7 @@ const ProfilePage = () => {
                             <Facebook size={20} />
                         </div>
                         <div>
-                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">Facebook</p>
+                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">{t('contact.facebook')}</p>
                             {renderContactValue(user.facebook)}
                         </div>
                     </div>
@@ -166,7 +168,7 @@ const ProfilePage = () => {
                             <Mail size={20} />
                         </div>
                         <div>
-                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">ইমেইল এড্রেস</p>
+                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">{t('contact.email')}</p>
                             {renderContactValue(user.email)}
                         </div>
                     </div>
@@ -177,7 +179,7 @@ const ProfilePage = () => {
                             <MapPin size={20} />
                         </div>
                         <div>
-                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">বর্তমান ঠিকানা</p>
+                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">{t('contact.address')}</p>
                             {renderContactValue(user.address)}
                         </div>
                     </div>
@@ -202,8 +204,8 @@ const ProfilePage = () => {
                             {/* Modal Header */}
                             <div className="p-6 border-b border-base-200 flex justify-between items-center bg-base-50">
                                 <div>
-                                    <h3 className="text-2xl font-black text-neutral">তথ্য পরিবর্তন করুন</h3>
-                                    <p className="text-sm text-gray-500">আপনার যোগাযোগের তথ্য আপডেট রাখুন</p>
+                                    <h3 className="text-2xl font-black text-neutral">{t('modal.title')}</h3>
+                                    <p className="text-sm text-gray-500">{t('modal.subtitle')}</p>
                                 </div>
                                 <button onClick={() => setIsEditing(false)} className="btn btn-sm btn-circle btn-ghost text-gray-500 hover:bg-red-50 hover:text-red-500">
                                     <X size={24} />
@@ -214,7 +216,7 @@ const ProfilePage = () => {
                             <form onSubmit={handleSave} className="p-6 md:p-8 overflow-y-auto space-y-5">
                                 {/* Name */}
                                 <div className="form-control">
-                                    <label className="label font-bold text-neutral">সম্পূর্ণ নাম</label>
+                                    <label className="label font-bold text-neutral">{t('modal.labels.name')}</label>
                                     <input 
                                         type="text" name="name" 
                                         value={formData.name} onChange={handleInputChange}
@@ -224,7 +226,7 @@ const ProfilePage = () => {
 
                                 {/* Blood Group */}
                                 <div className="form-control">
-                                    <label className="label font-bold text-neutral">রক্তের গ্রুপ</label>
+                                    <label className="label font-bold text-neutral">{t('modal.labels.bloodGroup')}</label>
                                     <select 
                                         name="bloodGroup" 
                                         value={formData.bloodGroup} onChange={handleInputChange}
@@ -236,33 +238,33 @@ const ProfilePage = () => {
 
                                 {/* Contacts Group */}
                                 <div className="bg-base-50 p-5 rounded-2xl space-y-4 border border-base-200">
-                                    <h4 className="font-bold text-gray-500 uppercase text-xs tracking-widest border-b border-base-200 pb-2 mb-2">যোগাযোগ মাধ্যম</h4>
+                                    <h4 className="font-bold text-gray-500 uppercase text-xs tracking-widest border-b border-base-200 pb-2 mb-2">{t('modal.labels.contactMethod')}</h4>
                                     
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="form-control">
-                                            <label className="label font-bold text-neutral flex gap-2"><Phone size={14}/> মোবাইল নাম্বার</label>
+                                            <label className="label font-bold text-neutral flex gap-2"><Phone size={14}/> {t('modal.labels.phone')}</label>
                                             <input 
                                                 type="tel" name="phone" 
                                                 value={formData.phone} onChange={handleInputChange}
-                                                placeholder="ex: +8801..."
+                                                placeholder={t('modal.labels.phonePlaceholder')}
                                                 className="input input-bordered w-full rounded-xl focus:outline-primary font-bold" 
                                             />
                                         </div>
                                         <div className="form-control">
-                                            <label className="label font-bold text-neutral flex gap-2"><MessageCircle size={14}/> WhatsApp</label>
+                                            <label className="label font-bold text-neutral flex gap-2"><MessageCircle size={14}/> {t('modal.labels.whatsapp')}</label>
                                             <input 
                                                 type="text" name="whatsapp" 
                                                 value={formData.whatsapp} onChange={handleInputChange}
-                                                placeholder="WhatsApp Number"
+                                                placeholder={t('modal.labels.whatsappPlaceholder')}
                                                 className="input input-bordered w-full rounded-xl focus:outline-primary" 
                                             />
                                         </div>
                                         <div className="form-control md:col-span-2">
-                                            <label className="label font-bold text-neutral flex gap-2"><Facebook size={14}/> Facebook Link</label>
+                                            <label className="label font-bold text-neutral flex gap-2"><Facebook size={14}/> {t('modal.labels.facebook')}</label>
                                             <input 
                                                 type="text" name="facebook" 
                                                 value={formData.facebook} onChange={handleInputChange}
-                                                placeholder="Facebook Profile URL or Username"
+                                                placeholder={t('modal.labels.facebookPlaceholder')}
                                                 className="input input-bordered w-full rounded-xl focus:outline-primary" 
                                             />
                                         </div>
@@ -271,7 +273,7 @@ const ProfilePage = () => {
 
                                 {/* Email */}
                                 <div className="form-control">
-                                    <label className="label font-bold text-neutral">ইমেইল এড্রেস</label>
+                                    <label className="label font-bold text-neutral">{t('modal.labels.email')}</label>
                                     <input 
                                         type="email" name="email" 
                                         value={formData.email} onChange={handleInputChange}
@@ -281,7 +283,7 @@ const ProfilePage = () => {
 
                                 {/* Address */}
                                 <div className="form-control">
-                                    <label className="label font-bold text-neutral">বর্তমান ঠিকানা</label>
+                                    <label className="label font-bold text-neutral">{t('modal.labels.address')}</label>
                                     <textarea 
                                         name="address" 
                                         value={formData.address} onChange={handleInputChange}
@@ -291,9 +293,9 @@ const ProfilePage = () => {
 
                                 {/* Modal Actions */}
                                 <div className="pt-4 flex gap-3 justify-end">
-                                    <button type="button" onClick={() => setIsEditing(false)} className="btn btn-ghost rounded-xl font-bold">বাতিল করুন</button>
+                                    <button type="button" onClick={() => setIsEditing(false)} className="btn btn-ghost rounded-xl font-bold">{t('modal.cancel')}</button>
                                     <button type="submit" className="btn btn-primary text-white rounded-xl px-8 font-bold shadow-lg shadow-primary/30">
-                                        <Save size={18} /> সেভ করুন
+                                        <Save size={18} /> {t('modal.save')}
                                     </button>
                                 </div>
                             </form>
