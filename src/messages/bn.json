@@ -458,5 +458,10 @@
       "saveBtn": "সংরক্ষণ করুন",
       "saving": "সংরক্ষণ করা হচ্ছে..."
     }
+  },
+  "Loading": {
+    "brandName": "Rokto <highlight>Din</highlight>",
+    "loadingText": "লোড হচ্ছে, দয়া করে অপেক্ষা করুন...",
+    "tagline": "মানুষ মানুষের জন্য"
   }
 }

@@ -459,5 +459,10 @@
       "saveBtn": "Save Record",
       "saving": "Saving..."
     }
+  },
+  "Loading": {
+    "brandName": "Rokto <highlight>Din</highlight>",
+    "loadingText": "Loading, please wait...",
+    "tagline": "Humans for Humanity"
   }
 }

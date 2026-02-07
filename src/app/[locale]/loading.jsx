@@ -1,10 +1,13 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export default function Loading() {
+  const t = useTranslations('Loading');
+
   return (
-    <div className="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-white">
+    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white">
       <div className="relative flex flex-col items-center">
         
         {/* 1. Animated Blood Drop Logo */}
@@ -43,12 +46,14 @@ export default function Loading() {
 
         {/* 2. Brand Name */}
         <h2 className="text-2xl font-black text-neutral tracking-tight mb-2">
-          Rokto <span className="text-primary">Din</span>
+          {t.rich('brandName', {
+            highlight: (chunks) => <span className="text-primary">{chunks}</span>
+          })}
         </h2>
         
-        {/* 3. Loading Text in Bangla */}
+        {/* 3. Loading Text */}
         <p className="text-gray-500 font-medium text-sm animate-pulse">
-          লোড হচ্ছে, দয়া করে অপেক্ষা করুন...
+          {t('loadingText')}
         </p>
 
         {/* 4. Sleek Progress Bar */}
@@ -61,7 +66,7 @@ export default function Loading() {
               repeat: Infinity, 
               ease: "linear" 
             }}
-            className="w-full h-full bg-linear-to-r from-transparent via-primary to-transparent"
+            className="w-full h-full bg-gradient-to-r from-transparent via-primary to-transparent"
           />
         </div>
       </div>
@@ -69,7 +74,7 @@ export default function Loading() {
       {/* 5. Bottom Tagline */}
       <div className="absolute bottom-10">
         <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.3em]">
-          মানুষ মানুষের জন্য
+          {t('tagline')}
         </p>
       </div>
     </div>
