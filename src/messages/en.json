@@ -492,5 +492,33 @@
     "confirmPassword": "Confirm New Password",
     "confirmPasswordPlaceholder": "Re-enter the password",
     "updateButton": "Update Password"
+  },
+  "ForgotPassword": {
+    "sideTitle": "Every donation is a story of saving a life.",
+    "sideSubtitle": "Regain access to your account and continue your noble journey with us.",
+    "title": "Forgot Password?",
+    "subtitle": "Enter your email address and we will send you a link to reset your password.",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "Enter your registered email",
+    "submitButton": "Send Reset Link",
+    "backToLogin": "Back to Login",
+    "successTitle": "Check Your Email",
+    "successMessage": "We've sent a password reset link to:",
+    "resendLink": "Didn't receive the email? Click to resend."
+  },
+  "ResetPassword": {
+    "sideTitle": "Keep your account secure.",
+    "sideSubtitle": "Use a strong password and continue your noble journey of blood donation with us.",
+    "title": "Set New Password",
+    "subtitle": "Create a strong and secure new password for your account.",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter new strong password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Re-enter the password",
+    "submitButton": "Reset Password",
+    "successTitle": "Password Reset Successful!",
+    "successMessage": "Your password has been changed successfully. You can now use your new password to log in to your account.",
+    "loginButton": "Go to Login",
+    "errorMismatch": "Passwords do not match. Please check again."
   }
 }
