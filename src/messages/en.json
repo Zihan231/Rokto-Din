@@ -387,6 +387,7 @@
       "profile": "Profile",
       "history": "Donation History",
       "newDonation": "New Donation",
+      "changePassword": "Change Password",
       "logout": "Logout"
     },
     "header": {
@@ -478,5 +479,18 @@
       "findDonors": "Find Donors"
     },
     "contact": "For assistance, contact:"
+  },
+  "ChangePassword": {
+    "title": "Change Password",
+    "subtitle": "Use a strong password to ensure your account's security.",
+    "currentPassword": "Current Password",
+    "currentPasswordPlaceholder": "Enter current password",
+    "forgotPassword": "Forgot password?",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter a new strong password",
+    "passwordHint": "Try to use at least 8 characters and numbers.",
+    "confirmPassword": "Confirm New Password",
+    "confirmPasswordPlaceholder": "Re-enter the password",
+    "updateButton": "Update Password"
   }
 }

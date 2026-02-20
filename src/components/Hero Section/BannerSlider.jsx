@@ -72,7 +72,7 @@ const HeroBanner = () => {
             <div className="relative w-full max-w-2xl lg:max-w-full">
               <div className="absolute inset-0 bg-linear-to-r from-primary/5 to-transparent rounded-full blur-3xl transform scale-150 -z-10"></div>
               
-              <div className="relative aspect-[16/10] overflow-hidden" 
+              <div className="relative aspect-16/10 overflow-hidden" 
                    style={{ maskImage: 'radial-gradient(circle, black 60%, transparent 95%)', WebkitMaskImage: 'radial-gradient(circle, black 60%, transparent 95%)' }}>
                 
                 {!isClient ? (

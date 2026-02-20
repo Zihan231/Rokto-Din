@@ -5,15 +5,16 @@ import { usePathname, useRouter, Link } from '@/i18n/navigation';
 import {
     LayoutDashboard, User, History,
     LogOut, Menu, X, Droplets, Bell,
-    PlusCircle
+    PlusCircle,
+    KeyRound
 } from 'lucide-react';
 import { HiOutlineGlobeAlt } from 'react-icons/hi';
 
 export default function DashboardLayout({ children }) {
     const t = useTranslations('DashboardLayout');
-    const locale = useLocale(); 
+    const locale = useLocale();
     const router = useRouter();
-    const pathname = usePathname(); 
+    const pathname = usePathname();
     const [isPending, startTransition] = useTransition();
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
@@ -25,6 +26,7 @@ export default function DashboardLayout({ children }) {
         { icon: <User size={20} />, label: t('menu.profile'), href: "/dashboard/profile" },
         { icon: <History size={20} />, label: t('menu.history'), href: "/dashboard/history" },
         { icon: <PlusCircle size={20} />, label: t('menu.newDonation'), href: "/dashboard/donation" },
+        { icon: <KeyRound size={20} />, label: t('menu.changePassword'), href: "/dashboard/change-password" }
     ];
 
     // Language Switch Logic
@@ -109,13 +111,13 @@ export default function DashboardLayout({ children }) {
                         <Droplets className="text-primary fill-primary" />
                         <span className="font-black text-xl tracking-tighter">Rokto Din</span>
                     </div>
-                    
+
                     {/* Added Language Switcher here */}
                     <div className="flex items-center gap-3">
-                        <button 
+                        <button
                             onClick={handleLanguageSwitch}
                             disabled={isPending}
-                            className="btn btn-ghost btn-circle btn-sm text-base-content hover:text-primary transition-colors" 
+                            className="btn btn-ghost btn-circle btn-sm text-base-content hover:text-primary transition-colors"
                             title="Switch Language"
                         >
                             <div className="flex flex-col items-center">
@@ -136,12 +138,12 @@ export default function DashboardLayout({ children }) {
                 <header className="hidden md:flex h-20 bg-white border-b border-base-300 items-center justify-between px-10 shadow-sm shrink-0">
                     <h2 className="font-bold text-neutral">{t('header.dashboardTitle')}</h2>
                     <div className="flex items-center gap-6">
-                        
+
                         {/* Language Switcher Button */}
-                        <button 
+                        <button
                             onClick={handleLanguageSwitch}
                             disabled={isPending}
-                            className="btn btn-ghost btn-circle text-base-content hover:text-primary transition-colors" 
+                            className="btn btn-ghost btn-circle text-base-content hover:text-primary transition-colors"
                             title="Switch Language"
                         >
                             <div className="flex flex-col items-center">

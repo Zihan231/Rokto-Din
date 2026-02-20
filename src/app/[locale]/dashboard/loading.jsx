@@ -7,7 +7,7 @@ export default function Loading() {
   const t = useTranslations('Loading');
 
   return (
-    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white">
+    <div className="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-white">
       <div className="relative flex flex-col items-center">
         
         {/* 1. Animated Blood Drop Logo */}
@@ -66,7 +66,7 @@ export default function Loading() {
               repeat: Infinity, 
               ease: "linear" 
             }}
-            className="w-full h-full bg-gradient-to-r from-transparent via-primary to-transparent"
+            className="w-full h-full bg-linear-to-r from-transparent via-primary to-transparent"
           />
         </div>
       </div>

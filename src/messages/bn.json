@@ -386,6 +386,7 @@
       "profile": "Profile",
       "history": "Donation History",
       "newDonation": "New Donation",
+      "changePassword": "Change Password",
       "logout": "Logout"
     },
     "header": {
@@ -477,5 +478,18 @@
       "findDonors": "ডোনার খুঁজুন"
     },
     "contact": "প্রয়োজনে যোগাযোগ করুন:"
+  },
+  "ChangePassword": {
+    "title": "পাসওয়ার্ড পরিবর্তন",
+    "subtitle": "আপনার অ্যাকাউন্টের নিরাপত্তা নিশ্চিত করতে শক্তিশালী পাসওয়ার্ড ব্যবহার করুন।",
+    "currentPassword": "বর্তমান পাসওয়ার্ড",
+    "currentPasswordPlaceholder": "বর্তমান পাসওয়ার্ড লিখুন",
+    "forgotPassword": "পাসওয়ার্ড ভুলে গেছেন?",
+    "newPassword": "নতুন পাসওয়ার্ড",
+    "newPasswordPlaceholder": "নতুন শক্তিশালী পাসওয়ার্ড লিখুন",
+    "passwordHint": "অন্তত ৮ ক্যারেক্টার এবং সংখ্যা ব্যবহার করার চেষ্টা করুন।",
+    "confirmPassword": "নতুন পাসওয়ার্ড নিশ্চিত করুন",
+    "confirmPasswordPlaceholder": "পাসওয়ার্ডটি পুনরায় লিখুন",
+    "updateButton": "পাসওয়ার্ড আপডেট করুন"
   }
 }
