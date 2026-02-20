@@ -464,5 +464,15 @@
     "brandName": "Rokto <highlight>Din</highlight>",
     "loadingText": "Loading, please wait...",
     "tagline": "Humans for Humanity"
+  },
+  "NotFound": {
+    "title": "Oops!",
+    "heading": "Sorry, this page could not be found",
+    "description": "The page you are looking for might have been removed or the URL is incorrect. Please use the buttons below to return to the homepage.",
+    "buttons": {
+      "home": "Go Back Home",
+      "findDonors": "Find Donors"
+    },
+    "contact": "For assistance, contact:"
   }
 }

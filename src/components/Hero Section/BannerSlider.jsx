@@ -5,14 +5,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import { HiOutlineArrowRight } from "react-icons/hi";
 import { motion } from "framer-motion";
-import { useTranslations } from 'next-intl'; // Import Translation Hook
+import { useTranslations } from 'next-intl';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import Link from 'next/link';
 
 const HeroBanner = () => {
-  const t = useTranslations('HeroBanner'); // Initialize hook
+  const t = useTranslations('HeroBanner');
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -33,14 +33,14 @@ const HeroBanner = () => {
   return (
     <section className="relative w-full bg-base-200 overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 py-2">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* TEXT SECTION */}
+          {/* TEXT SECTION: 4 columns */}
           <motion.div 
             initial={isClient ? "hidden" : "visible"}
             animate="visible"
             viewport={{ once: true }}
-            className="order-2 lg:order-1 text-center lg:text-left"
+            className="order-2 lg:order-1 lg:col-span-4 text-center lg:text-left"
           >
             <motion.div variants={fadeInUp} className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary font-bold text-sm mb-6 uppercase tracking-wider">
               {t('tagline')}
@@ -52,7 +52,6 @@ const HeroBanner = () => {
             </motion.h1>
 
             <motion.p variants={fadeInUp} className="text-lg md:text-xl text-gray-700 mb-10 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-              {/* Rich text for highlighting the app name */}
               {t.rich('description', {
                 highlight: (chunks) => <span className="font-bold text-primary"> {chunks} </span>
               })}
@@ -68,12 +67,12 @@ const HeroBanner = () => {
             </motion.div>
           </motion.div>
 
-          {/* IMAGE SLIDER SECTION (Unchanged logic, just keeping structure) */}
-          <div className="order-1 lg:order-2 w-full flex justify-center">
-            <div className="relative w-full max-w-[700px]">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent rounded-full blur-3xl transform scale-150 -z-10"></div>
+          {/* IMAGE SLIDER SECTION: 8 columns */}
+          <div className="order-1 lg:order-2 lg:col-span-8 w-full flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-2xl lg:max-w-full">
+              <div className="absolute inset-0 bg-linear-to-r from-primary/5 to-transparent rounded-full blur-3xl transform scale-150 -z-10"></div>
               
-              <div className="relative aspect-[7/6] overflow-hidden" 
+              <div className="relative aspect-[16/10] overflow-hidden" 
                    style={{ maskImage: 'radial-gradient(circle, black 60%, transparent 95%)', WebkitMaskImage: 'radial-gradient(circle, black 60%, transparent 95%)' }}>
                 
                 {!isClient ? (
@@ -84,6 +83,7 @@ const HeroBanner = () => {
                       fill
                       priority
                       className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 1000px" /* Added sizes here for the fallback */
                     />
                   </div>
                 ) : (
@@ -105,7 +105,7 @@ const HeroBanner = () => {
                             fill
                             priority={index === 0}
                             className="object-cover" 
-                            sizes="(max-width: 768px) 100vw, 700px"
+                            sizes="(max-width: 1024px) 100vw, 1000px" /* Updated sizes here for the slider */
                           />
                         </div>
                       </SwiperSlide>
