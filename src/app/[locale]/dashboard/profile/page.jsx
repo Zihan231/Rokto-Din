@@ -9,18 +9,30 @@ import {
     MessageCircle, Facebook 
 } from 'lucide-react';
 
+// Bangladeshi Location Data mapping Divisions to Districts
+const locations = {
+    "Dhaka": ["Dhaka", "Gazipur", "Narayanganj", "Tangail", "Kishoreganj", "Manikganj", "Munshiganj", "Rajbari", "Madaripur", "Gopalganj", "Faridpur", "Shariatpur", "Narsingdi"],
+    "Chattogram": ["Chattogram", "Cox's Bazar", "Cumilla", "Noakhali", "Feni", "Brahmanbaria", "Rangamati", "Bandarban", "Khagrachari", "Lakshmipur", "Chandpur"],
+    "Rajshahi": ["Rajshahi", "Sirajganj", "Pabna", "Bogra", "Rajshahi", "Natore", "Joypurhat", "Chapainawabganj", "Naogaon"],
+    "Khulna": ["Khulna", "Jashore", "Satkhira", "Meherpur", "Narail", "Chuadanga", "Kushtia", "Magura", "Bagerhat", "Jhenaidah"],
+    "Barishal": ["Barishal", "Jhalokati", "Patuakhali", "Pirojpur", "Bhola", "Barguna"],
+    "Sylhet": ["Sylhet", "Moulvibazar", "Habiganj", "Sunamganj"],
+    "Rangpur": ["Rangpur", "Panchagarh", "Dinajpur", "Lalmonirhat", "Nilphamari", "Gaibandha", "Thakurgaon", "Kurigram"],
+    "Mymensingh": ["Mymensingh", "Sherpur", "Jamalpur", "Netrokona"]
+};
+
 const ProfilePage = () => {
     const t = useTranslations('ProfilePage');
 
-    // 1. User Data State (Mock Data)
     const [user, setUser] = useState({
         name: "MD. Zihaul Islam Zihan",
-        role: "Verified Donor", // This could be dynamic based on backend role
+        role: "Verified Donor",
         bloodGroup: "O+",
         totalDonation: "04",
         lastDonation: "12 Jan 2026",
         email: "zihan@example.com",
-        address: "Tongi, College Gate, Gazipur - Dhaka",
+        division: "Dhaka",
+        district: "Gazipur",
         phone: "+880 1712 345678",
         whatsapp: "", 
         facebook: "facebook.com/zihan.dev",
@@ -32,7 +44,6 @@ const ProfilePage = () => {
 
     const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
-    // Handlers
     const handleEditClick = () => {
         setFormData(user);
         setIsEditing(true);
@@ -43,13 +54,22 @@ const ProfilePage = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+    // Special handler for division to reset district when division changes
+    const handleDivisionChange = (e) => {
+        const newDivision = e.target.value;
+        setFormData({ 
+            ...formData, 
+            division: newDivision, 
+            district: "" // Reset district when division changes
+        });
+    };
+
     const handleSave = (e) => {
         e.preventDefault();
         setUser(formData);
         setIsEditing(false);
     };
 
-    // Helper to render contact info or missing message
     const renderContactValue = (value) => {
         if (!value || value.trim() === "") {
             return <span className="text-red-400 text-sm italic font-medium">{t('missingInfo')}</span>;
@@ -83,11 +103,7 @@ const ProfilePage = () => {
 
             {/* --- 2. Key Stats Grid --- */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Blood Group */}
-                <motion.div 
-                    layout
-                    className="bg-primary text-white p-8 rounded-[2.5rem] relative overflow-hidden shadow-xl shadow-primary/20 group"
-                >
+                <motion.div layout className="bg-primary text-white p-8 rounded-[2.5rem] relative overflow-hidden shadow-xl shadow-primary/20 group">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-10 -mt-10 blur-2xl group-hover:scale-150 transition-transform duration-700" />
                     <div className="relative z-10 flex flex-col items-center text-center">
                         <p className="font-bold opacity-80 uppercase tracking-widest text-xs mb-4">{t('stats.bloodGroup')}</p>
@@ -104,7 +120,6 @@ const ProfilePage = () => {
                     </div>
                 </motion.div>
 
-                {/* Total Donation */}
                 <div className="bg-white p-8 rounded-[2.5rem] border border-base-200 shadow-sm flex flex-col justify-center items-center text-center hover:border-primary/20 transition-all group">
                     <div className="w-14 h-14 bg-red-50 text-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <HeartHandshake size={28} />
@@ -113,7 +128,6 @@ const ProfilePage = () => {
                     <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">{t('stats.totalDonation')}</p>
                 </div>
 
-                {/* Last Donation */}
                 <div className="bg-white p-8 rounded-[2.5rem] border border-base-200 shadow-sm flex flex-col justify-center items-center text-center hover:border-primary/20 transition-all group">
                     <div className="w-14 h-14 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <Calendar size={28} />
@@ -126,10 +140,7 @@ const ProfilePage = () => {
             {/* --- 3. Contact Info --- */}
             <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-base-200 shadow-sm">
                 <h3 className="text-xl font-black text-neutral mb-8 border-b border-base-100 pb-4">{t('contact.title')}</h3>
-                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    
-                    {/* Phone */}
                     <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-base-50 transition-colors border border-transparent hover:border-base-200">
                         <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
                             <Phone size={20} />
@@ -139,8 +150,6 @@ const ProfilePage = () => {
                             {renderContactValue(user.phone)}
                         </div>
                     </div>
-
-                    {/* WhatsApp */}
                     <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-base-50 transition-colors border border-transparent hover:border-base-200">
                         <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
                             <MessageCircle size={20} />
@@ -150,8 +159,6 @@ const ProfilePage = () => {
                             {renderContactValue(user.whatsapp)}
                         </div>
                     </div>
-
-                    {/* Facebook */}
                     <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-base-50 transition-colors border border-transparent hover:border-base-200">
                         <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
                             <Facebook size={20} />
@@ -161,8 +168,6 @@ const ProfilePage = () => {
                             {renderContactValue(user.facebook)}
                         </div>
                     </div>
-
-                    {/* Email */}
                     <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-base-50 transition-colors border border-transparent hover:border-base-200">
                         <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
                             <Mail size={20} />
@@ -172,15 +177,22 @@ const ProfilePage = () => {
                             {renderContactValue(user.email)}
                         </div>
                     </div>
-
-                    {/* Address - Full Width */}
-                    <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-base-50 transition-colors border border-transparent hover:border-base-200 md:col-span-2">
+                    <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-base-50 transition-colors border border-transparent hover:border-base-200">
                         <div className="w-12 h-12 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center shrink-0">
                             <MapPin size={20} />
                         </div>
                         <div>
-                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">{t('contact.address')}</p>
-                            {renderContactValue(user.address)}
+                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">{t('contact.division')}</p>
+                            {renderContactValue(user.division)}
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-base-50 transition-colors border border-transparent hover:border-base-200">
+                        <div className="w-12 h-12 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center shrink-0">
+                            <MapPin size={20} />
+                        </div>
+                        <div>
+                            <p className="text-xs text-gray-400 font-bold uppercase mb-1">{t('contact.district')}</p>
+                            {renderContactValue(user.district)}
                         </div>
                     </div>
                 </div>
@@ -219,7 +231,7 @@ const ProfilePage = () => {
                                     <label className="label font-bold text-neutral">{t('modal.labels.name')}</label>
                                     <input 
                                         type="text" name="name" 
-                                        value={formData.name} onChange={handleInputChange}
+                                        value={formData.name || ''} onChange={handleInputChange}
                                         className="input input-bordered w-full rounded-xl focus:outline-primary" 
                                     />
                                 </div>
@@ -229,11 +241,48 @@ const ProfilePage = () => {
                                     <label className="label font-bold text-neutral">{t('modal.labels.bloodGroup')}</label>
                                     <select 
                                         name="bloodGroup" 
-                                        value={formData.bloodGroup} onChange={handleInputChange}
+                                        value={formData.bloodGroup || ''} onChange={handleInputChange}
                                         className="select select-bordered w-full rounded-xl focus:outline-primary font-bold"
                                     >
                                         {bloodGroups.map(bg => <option key={bg} value={bg}>{bg}</option>)}
                                     </select>
+                                </div>
+
+                                {/* Division & District Dropdowns */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {/* Division Dropdown */}
+                                    <div className="form-control">
+                                        <label className="label font-bold text-neutral">{t('modal.labels.division')}</label>
+                                        <select 
+                                            name="division" 
+                                            value={formData.division || ''} 
+                                            onChange={handleDivisionChange}
+                                            className="select select-bordered w-full rounded-xl focus:outline-primary font-bold"
+                                        >
+                                            <option value="" disabled>{t('modal.labels.selectDivision')}</option>
+                                            {Object.keys(locations).map(div => (
+                                                <option key={div} value={div}>{div}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {/* District Dropdown (Dependent on Division) */}
+                                    <div className="form-control">
+                                        <label className="label font-bold text-neutral">{t('modal.labels.district')}</label>
+                                        <select 
+                                            name="district" 
+                                            value={formData.district || ''} 
+                                            onChange={handleInputChange}
+                                            className="select select-bordered w-full rounded-xl focus:outline-primary font-bold"
+                                            disabled={!formData.division} // Disable if no division is selected
+                                        >
+                                            <option value="" disabled>{t('modal.labels.selectDistrict')}</option>
+                                            {/* Render districts based on selected division */}
+                                            {(locations[formData.division] || []).map(dist => (
+                                                <option key={dist} value={dist}>{dist}</option>
+                                            ))}
+                                        </select>
+                                    </div>
                                 </div>
 
                                 {/* Contacts Group */}
@@ -245,7 +294,7 @@ const ProfilePage = () => {
                                             <label className="label font-bold text-neutral flex gap-2"><Phone size={14}/> {t('modal.labels.phone')}</label>
                                             <input 
                                                 type="tel" name="phone" 
-                                                value={formData.phone} onChange={handleInputChange}
+                                                value={formData.phone || ''} onChange={handleInputChange}
                                                 placeholder={t('modal.labels.phonePlaceholder')}
                                                 className="input input-bordered w-full rounded-xl focus:outline-primary font-bold" 
                                             />
@@ -254,7 +303,7 @@ const ProfilePage = () => {
                                             <label className="label font-bold text-neutral flex gap-2"><MessageCircle size={14}/> {t('modal.labels.whatsapp')}</label>
                                             <input 
                                                 type="text" name="whatsapp" 
-                                                value={formData.whatsapp} onChange={handleInputChange}
+                                                value={formData.whatsapp || ''} onChange={handleInputChange}
                                                 placeholder={t('modal.labels.whatsappPlaceholder')}
                                                 className="input input-bordered w-full rounded-xl focus:outline-primary" 
                                             />
@@ -263,7 +312,7 @@ const ProfilePage = () => {
                                             <label className="label font-bold text-neutral flex gap-2"><Facebook size={14}/> {t('modal.labels.facebook')}</label>
                                             <input 
                                                 type="text" name="facebook" 
-                                                value={formData.facebook} onChange={handleInputChange}
+                                                value={formData.facebook || ''} onChange={handleInputChange}
                                                 placeholder={t('modal.labels.facebookPlaceholder')}
                                                 className="input input-bordered w-full rounded-xl focus:outline-primary" 
                                             />
@@ -276,19 +325,9 @@ const ProfilePage = () => {
                                     <label className="label font-bold text-neutral">{t('modal.labels.email')}</label>
                                     <input 
                                         type="email" name="email" 
-                                        value={formData.email} onChange={handleInputChange}
+                                        value={formData.email || ''} onChange={handleInputChange}
                                         className="input input-bordered w-full rounded-xl focus:outline-primary" 
                                     />
-                                </div>
-
-                                {/* Address */}
-                                <div className="form-control">
-                                    <label className="label font-bold text-neutral">{t('modal.labels.address')}</label>
-                                    <textarea 
-                                        name="address" 
-                                        value={formData.address} onChange={handleInputChange}
-                                        className="textarea textarea-bordered w-full rounded-xl h-24 focus:outline-primary text-base"
-                                    ></textarea>
                                 </div>
 
                                 {/* Modal Actions */}

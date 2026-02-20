@@ -24,7 +24,7 @@
     }
   },
 
-"AboutPage": {
+  "AboutPage": {
     "hero": {
       "title": "Building <highlight>Unity</highlight> through Blood Ties, We are Tomorrow's Reliable <highlight>Humanity</highlight>",
       "description": "<bold>Rokto Din</bold> is a modern and transparent online blood donation platform in Bangladesh. Our goal is to bridge the gap between donors and recipients through technology and ensure rapid blood supply for every critical patient."
@@ -281,7 +281,7 @@
     "copyright": "© {year} <bold>Rokto Din</bold>. All Rights Reserved.",
     "designedBy": "Designed with ❤️ by <highlight>Zihaul Islam Zihan</highlight>"
   },
- "LoginPage": {
+  "LoginPage": {
     "login": {
       "title": "Login",
       "subtitle": "Enter your account details",
@@ -413,7 +413,8 @@
       "whatsapp": "WhatsApp",
       "facebook": "Facebook",
       "email": "Email Address",
-      "address": "Current Address"
+      "division": "Division",
+      "district": "District"
     },
     "modal": {
       "title": "Update Information",
@@ -431,7 +432,10 @@
         "facebook": "Facebook Link",
         "facebookPlaceholder": "Facebook Profile URL or Username",
         "email": "Email Address",
-        "address": "Current Address"
+        "division": "Division",
+        "district": "District",
+        "selectDivision": "Select Division",
+        "selectDistrict": "Select District"
       }
     }
   },

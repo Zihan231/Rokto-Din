@@ -280,7 +280,7 @@
     "copyright": "© {year} <bold>Rokto Din</bold>. সর্বস্বত্ব সংরক্ষিত।",
     "designedBy": "Designed with ❤️ by <highlight>Zihaul Islam Zihan</highlight>"
   },
- "LoginPage": {
+  "LoginPage": {
     "login": {
       "title": "লগইন করুন",
       "subtitle": "আপনার অ্যাকাউন্টের তথ্য দিন",
@@ -412,7 +412,8 @@
       "whatsapp": "WhatsApp",
       "facebook": "Facebook",
       "email": "ইমেইল এড্রেস",
-      "address": "বর্তমান ঠিকানা"
+      "division": "বিভাগ",
+      "district": "জেলা"
     },
     "modal": {
       "title": "তথ্য পরিবর্তন করুন",
@@ -430,7 +431,10 @@
         "facebook": "Facebook Link",
         "facebookPlaceholder": "Facebook Profile URL or Username",
         "email": "ইমেইল এড্রেস",
-        "address": "বর্তমান ঠিকানা"
+        "division": "বিভাগ",
+        "district": "জেলা",
+        "selectDivision": "বিভাগ নির্বাচন করুন",
+        "selectDistrict": "জেলা নির্বাচন করুন"
       }
     }
   },
