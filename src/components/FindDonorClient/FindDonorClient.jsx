@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 
 export default function FindDonorClient() {
     const t = useTranslations('FindDonorClient');
-    
+
     const [formData, setFormData] = useState({ bloodGroup: '', division: '', district: '' });
     const [results, setResults] = useState([]);
     const [hasSearched, setHasSearched] = useState(false);
@@ -45,7 +45,7 @@ export default function FindDonorClient() {
 
     const handleSearch = () => {
         // In a real app, you would filter based on formData here
-        setResults(demoDonors); 
+        setResults(demoDonors);
         setHasSearched(true);
     };
 
@@ -75,7 +75,7 @@ export default function FindDonorClient() {
             <section className="container mx-auto px-4 md:px-8 -mt-12">
                 <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 border border-base-200">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
-                        
+
                         {/* Blood Group */}
                         <div className="form-control">
                             <label className="label"><span className="label-text font-bold text-gray-700 flex items-center gap-2"><Droplets size={18} className="text-primary" /> {t('form.bloodGroup')}</span></label>
@@ -97,9 +97,9 @@ export default function FindDonorClient() {
                         {/* District (Cascading) */}
                         <div className="form-control">
                             <label className="label"><span className="label-text font-bold text-gray-700 flex items-center gap-2"><MapPin size={18} className="text-primary" /> {t('form.district')}</span></label>
-                            <select 
-                                className="select select-bordered rounded-xl font-bold disabled:bg-gray-100 disabled:cursor-not-allowed" 
-                                value={formData.district} 
+                            <select
+                                className="select select-bordered rounded-xl font-bold disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                value={formData.district}
                                 onChange={(e) => setFormData({ ...formData, district: e.target.value })}
                                 disabled={!formData.division}
                             >
@@ -154,12 +154,12 @@ export default function FindDonorClient() {
                     <div className="modal modal-open modal-bottom sm:modal-middle backdrop-blur-sm bg-black/30">
                         <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="modal-box bg-white p-8 rounded-3xl border-t-4 border-primary shadow-2xl">
                             <button onClick={() => setSelectedDonor(null)} className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 hover:bg-red-50 hover:text-red-500 transition-colors"><X size={20} /></button>
-                            
+
                             <h3 className="text-2xl font-black text-center mb-2 text-neutral">{t('modal.title')}</h3>
                             <p className="text-center text-gray-500 mb-8 font-medium">
                                 {t('modal.subtitle', { name: selectedDonor.name })}
                             </p>
-                            
+
                             <div className="grid grid-cols-1 gap-4">
                                 {selectedDonor.phone && (
                                     <a href={`tel:${selectedDonor.phone}`} className="flex items-center justify-center gap-4 p-4 rounded-2xl bg-green-50 text-green-700 border border-green-100 font-bold hover:bg-green-100 transition-colors">
