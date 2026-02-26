@@ -4,6 +4,7 @@ import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { getMessages } from 'next-intl/server';
+import AuthProvider from "@/hooks/AuthContext/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +30,9 @@ export default async function RootLayout({ children, params }) {
   return (
     <html lang="en" data-theme="rokto-din">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NextIntlClientProvider messages={messages} >{children}</NextIntlClientProvider>
+        <AuthProvider>
+          <NextIntlClientProvider messages={messages} >{children}</NextIntlClientProvider>
+        </AuthProvider>
       </body>
     </html>
   );

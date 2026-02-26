@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from 'react';
+import React, { useContext, useState, useTransition } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { usePathname, useRouter, Link } from '@/i18n/navigation';
 import {
@@ -9,6 +9,8 @@ import {
     KeyRound
 } from 'lucide-react';
 import { HiOutlineGlobeAlt } from 'react-icons/hi';
+import AuthContext from '@/hooks/AuthContext/AuthContext';
+import { FaUserNinja } from 'react-icons/fa';
 
 export default function DashboardLayout({ children }) {
     const t = useTranslations('DashboardLayout');
@@ -18,8 +20,9 @@ export default function DashboardLayout({ children }) {
     const [isPending, startTransition] = useTransition();
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
+    const { user } = useContext(AuthContext);
     // Mock User Name
-    const userName = "Zihan Islam";
+    const userName = user?.fullName || "loading...";
 
     const menuItems = [
         { icon: <LayoutDashboard size={20} />, label: t('menu.dashboard'), href: "/dashboard" },
@@ -159,7 +162,8 @@ export default function DashboardLayout({ children }) {
                                 <p className="text-sm font-black leading-none">{t('header.donorName', { name: userName })}</p>
                                 <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mt-1">{t('header.donorRole')}</p>
                             </div>
-                            <div className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-black">MZ</div>
+                            <div className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-black"><FaUserNinja size={20} />
+</div>
                         </div>
                     </div>
                 </header>
