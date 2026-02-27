@@ -1,5 +1,5 @@
 "use client"; 
-import React, { useState } from 'react'; // Add useState to ensure client-side triggers
+import React from 'react'; 
 import { HashLoader } from 'react-spinners';
 
 const override = {

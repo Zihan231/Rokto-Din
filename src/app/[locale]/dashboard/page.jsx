@@ -1,12 +1,12 @@
 "use client";
 import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Droplets, MapPin, Heart, Clock } from 'lucide-react';
+import { Calendar, Droplets, MapPin, Clock, HeartHandshake } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import AuthContext from '@/hooks/AuthContext/AuthContext';
 // Ensure this path matches your project structure
-import Loading from '@/components/Loading/Loading'; 
+import Loading from '@/components/Loading/Loading';
 
 const DashboardPage = () => {
     const t = useTranslations('DashboardPage');
@@ -25,15 +25,14 @@ const DashboardPage = () => {
 
     // --- 3. DATE LOGIC ---
     const { fullName: userName, lastDonation, totalDonation } = user;
-    console.log(user);
     const today = new Date();
     let daysRemaining = 0;
     let lastDonationDateFormatted = "N/A";
 
     if (lastDonation) {
         const lastDate = new Date(lastDonation);
-        lastDonationDateFormatted = lastDate.toLocaleDateString('en-GB', { 
-            day: 'numeric', month: 'short', year: 'numeric' 
+        lastDonationDateFormatted = lastDate.toLocaleDateString('en-GB', {
+            day: 'numeric', month: 'short', year: 'numeric'
         });
 
         // Add 90 days for recovery
@@ -66,7 +65,7 @@ const DashboardPage = () => {
             label: t('stats.totalDonation'),
             value: t('stats.times', { count: totalDonation || '0' }),
             color: "bg-blue-500",
-            icon: <Heart size={20} />
+            icon: <HeartHandshake size={28} />
         },
         {
             label: t('stats.lastDonation'),
@@ -105,7 +104,7 @@ const DashboardPage = () => {
                             {t('welcome.message')}
                         </p>
                     </div>
-                    <div className="w-28 h-28 md:w-40 md:h-40 rounded-[2rem] md:rounded-[2.5rem] bg-white/5 border border-white/10 flex flex-col items-center justify-center backdrop-blur-md shrink-0">
+                    <div className="w-28 h-28 md:w-40 md:h-40 rounded-4xl md:rounded-[2.5rem] bg-white/5 border border-white/10 flex flex-col items-center justify-center backdrop-blur-md shrink-0">
                         <span className="text-primary font-black text-4xl md:text-5xl">{user.bloodGroup || "O+"}</span>
                         <span className="text-[10px] uppercase font-bold tracking-widest mt-2">{t('welcome.yourGroup')}</span>
                     </div>
@@ -118,11 +117,11 @@ const DashboardPage = () => {
                     <motion.div
                         key={i}
                         whileHover={{ y: -5 }}
-                        className="p-6 md:p-8 bg-white rounded-[2rem] md:rounded-[2.5rem] border border-base-300 shadow-sm flex items-center justify-between gap-4 group hover:border-primary/20 transition-all"
+                        className="p-6 md:p-8 bg-white rounded-4xl md:rounded-[2.5rem] border border-base-300 shadow-sm flex items-center justify-between gap-4 group hover:border-primary/20 transition-all"
                     >
                         <div className="flex-1 min-w-0"> {/* min-w-0 helps text wrap correctly */}
                             <p className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">{stat.label}</p>
-                            <h4 className="text-xl md:text-2xl font-black text-neutral italic leading-tight break-words">
+                            <h4 className="text-xl md:text-2xl font-black text-neutral italic leading-tight wrap-break-word">
                                 {stat.value}
                             </h4>
                         </div>
@@ -134,14 +133,14 @@ const DashboardPage = () => {
             </div>
 
             {/* Recent Activity Table */}
-            <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 border border-base-300 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-4xl md:rounded-[2.5rem] p-6 md:p-10 border border-base-300 shadow-sm overflow-hidden">
                 <div className="flex justify-between items-center mb-6 md:mb-8">
                     <h3 className="text-lg md:text-xl font-black text-neutral">{t('activity.title')}</h3>
                     <Link href="/dashboard/history" className="btn btn-ghost btn-sm text-primary font-bold">{t('activity.viewAll')}</Link>
                 </div>
 
                 <div className="overflow-x-auto">
-                    <table className="table w-full border-separate border-spacing-y-3 min-w-[600px]">
+                    <table className="table w-full border-separate border-spacing-y-3 min-w-150">
                         <thead>
                             <tr className="text-gray-400 border-none uppercase text-[10px] tracking-widest text-left">
                                 <th className="bg-transparent pl-6">{t('activity.headers.date')}</th>
