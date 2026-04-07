@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 
 const instance = axios.create({
-    baseURL: "https://rokto-din-server.vercel.app/",
+    baseURL: "/api",
     withCredentials: true,
 })
 const useAxiosSecure = () => {

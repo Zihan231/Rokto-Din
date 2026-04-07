@@ -9,26 +9,33 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-
-    // user Profile
     const fetchUserProfile = async () => {
         try {
-            const res = await axiosSecure.get("donor/profile");
+            const res = await axiosSecure.get("/donor/profile");
             return res.data.data;
         } catch (err) {
-            console.log(err);
+            console.log("profile fetch failed:", err.response?.status, err.response?.data);
+            throw err;
         }
-    }
+    };
 
     useEffect(() => {
         const initializeUser = async () => {
             setLoading(true);
-            const userData = await fetchUserProfile();
-            if (userData) {
-                setUser(userData);
+            try {
+                const userData = await fetchUserProfile();
+                if (userData) {
+                    setUser(userData);
+                } else {
+                    setUser(null);
+                }
+            } catch (err) {
+                setUser(null);
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
-        }
+        };
+
         initializeUser();
     }, []);
 
@@ -37,7 +44,8 @@ const AuthProvider = ({ children }) => {
         setUser,
         fetchUserProfile,
         loading
-    }
+    };
+
     return (
         <AuthContext.Provider value={userInfo}>
             {children}
