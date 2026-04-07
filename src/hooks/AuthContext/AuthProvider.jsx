@@ -22,12 +22,21 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const initializeUser = async () => {
             setLoading(true);
-            const userData = await fetchUserProfile();
-            if (userData) {
-                setUser(userData);
+
+            try {
+                const userData = await fetchUserProfile();
+                if (userData) {
+                    setUser(userData);
+                } else {
+                    setUser(null);
+                }
+            } catch (err) {
+                setUser(null);
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
-        }
+        };
+
         initializeUser();
     }, []);
 
