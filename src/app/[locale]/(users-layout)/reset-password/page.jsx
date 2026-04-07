@@ -1,20 +1,22 @@
 "use client";
 import React, { useState, Suspense } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { Lock, Eye, EyeOff, CheckCircle2, Droplets, ArrowRight } from 'lucide-react';
+import { Lock, Eye, EyeOff, CheckCircle2, Droplets, ArrowRight, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
+import useAxios from '@/hooks/axios/useAxios';
 
-// মেইন ফর্ম কম্পোনেন্ট
 const ResetPasswordForm = () => {
     const t = useTranslations('ResetPassword');
     const searchParams = useSearchParams();
     const router = useRouter();
-    
-    // URL থেকে টোকেন নেওয়া (যদি থাকে)
+    const axiosPublic = useAxios();
+
+    // Extract token from URL
     const token = searchParams.get('token');
 
+    // State Management
     const [formData, setFormData] = useState({
         newPassword: '',
         confirmPassword: ''
@@ -22,42 +24,89 @@ const ResetPasswordForm = () => {
     const [showPassword, setShowPassword] = useState({ new: false, confirm: false });
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
-    const [errorMsg, setErrorMsg] = useState('');
+
+    // Validation & Error States
+    const [errors, setErrors] = useState({});
+    const [apiError, setApiError] = useState('');
+    const [apiSuccessMsg, setApiSuccessMsg] = useState('');
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-        setErrorMsg(''); // টাইপ করার সময় এরর মুছে যাবে
+        // Clear specific field error on typing
+        if (errors[e.target.name]) {
+            setErrors({ ...errors, [e.target.name]: null });
+        }
+        if (apiError) setApiError('');
     };
 
     const toggleVisibility = (field) => {
         setShowPassword({ ...showPassword, [field]: !showPassword[field] });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        // Validation: পাসওয়ার্ড ম্যাচ করেছে কিনা চেক করা
-        if (formData.newPassword !== formData.confirmPassword) {
-            setErrorMsg(t('errorMismatch'));
-            return;
+    // Strict Validation matching NestJS DTO
+    const validateForm = () => {
+        const newErrors = {};
+        const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/;
+
+        if (!token) {
+            setApiError(t('errors.missingToken'));
+            return false;
         }
 
-        setIsLoading(true);
-        
-        // এখানে আপনার API কল হবে (Backend এ token এবং newPassword পাঠাবেন)
-        // const response = await axios.post('/api/reset-password', { token, newPassword: formData.newPassword });
+        if (!formData.newPassword) {
+            newErrors.newPassword = t('errors.emptyNew');
+        } else if (formData.newPassword.length < 6 || formData.newPassword.length > 20) {
+            newErrors.newPassword = t('errors.length');
+        } else if (!passRegex.test(formData.newPassword)) {
+            newErrors.newPassword = t('errors.regex');
+        }
 
-        setTimeout(() => {
+        if (!formData.confirmPassword) {
+            newErrors.confirmPassword = t('errors.emptyConfirm');
+        } else if (formData.newPassword !== formData.confirmPassword) {
+            newErrors.confirmPassword = t('errors.mismatch');
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setApiError('');
+
+        if (!validateForm()) return;
+
+        setIsLoading(true);
+
+        try {
+            const payload = {
+                token: token,
+                newPassword: formData.newPassword,
+                confirmPassword: formData.confirmPassword
+            };
+
+            const response = await axiosPublic.post('/auth/reset-password', payload);
+
+            if (response.data) {
+                // Prioritize translated success message over raw API message
+                setApiSuccessMsg(t('status.success'));
+                setIsSuccess(true);
+            }
+        } catch (error) {
+            console.error("Reset password error:", error);
+            // Fall back to translated error if API fails
+            setApiError(t('status.error'));
+        } finally {
             setIsLoading(false);
-            setIsSuccess(true);
-        }, 1500);
+        }
     };
 
     return (
         <div className="w-full max-w-md mx-auto">
             {!isSuccess ? (
                 /* FORM STATE */
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="space-y-8"
@@ -71,6 +120,21 @@ const ResetPasswordForm = () => {
                         </p>
                     </div>
 
+                    {/* API Error Alert Box */}
+                    <AnimatePresence>
+                        {apiError && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                                animate={{ opacity: 1, height: 'auto', marginBottom: 20 }}
+                                exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                                className="relative z-10 p-4 rounded-2xl flex items-start gap-3 bg-red-50 text-red-700 border border-red-200"
+                            >
+                                <AlertCircle className="mt-0.5 shrink-0" size={18} />
+                                <p className="text-sm font-semibold">{apiError}</p>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
                     <form onSubmit={handleSubmit} className="space-y-5">
                         {/* New Password */}
                         <div className="form-control">
@@ -78,26 +142,33 @@ const ResetPasswordForm = () => {
                                 <span className="text-sm">{t('newPassword')}</span>
                             </label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                                <div className={`absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors ${errors.newPassword ? 'text-red-400' : 'text-gray-400'}`}>
                                     <Lock size={18} />
                                 </div>
-                                <input 
-                                    type={showPassword.new ? "text" : "password"} 
+                                <input
+                                    type={showPassword.new ? "text" : "password"}
                                     name="newPassword"
                                     value={formData.newPassword}
                                     onChange={handleInputChange}
-                                    required
                                     placeholder={t('newPasswordPlaceholder')}
-                                    className="input input-bordered w-full pl-12 pr-12 rounded-xl focus:outline-primary bg-base-50 focus:bg-white h-14 font-medium text-neutral border-gray-200 transition-colors"
+                                    className={`input input-bordered w-full pl-12 pr-12 rounded-xl focus:outline-primary h-14 font-medium text-neutral transition-colors ${errors.newPassword
+                                            ? 'border-red-400 focus:outline-red-500 bg-red-50/50'
+                                            : 'bg-base-50 focus:bg-white border-gray-200'
+                                        }`}
                                 />
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     onClick={() => toggleVisibility('new')}
                                     className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-primary transition-colors"
                                 >
                                     {showPassword.new ? <EyeOff size={18} /> : <Eye size={18} />}
                                 </button>
                             </div>
+                            {errors.newPassword && (
+                                <span className="text-red-500 text-xs mt-1.5 ml-1 font-medium block">
+                                    {errors.newPassword}
+                                </span>
+                            )}
                         </div>
 
                         {/* Confirm Password */}
@@ -106,36 +177,39 @@ const ResetPasswordForm = () => {
                                 <span className="text-sm">{t('confirmPassword')}</span>
                             </label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                                <div className={`absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors ${errors.confirmPassword ? 'text-red-400' : 'text-gray-400'}`}>
                                     <Lock size={18} />
                                 </div>
-                                <input 
-                                    type={showPassword.confirm ? "text" : "password"} 
+                                <input
+                                    type={showPassword.confirm ? "text" : "password"}
                                     name="confirmPassword"
                                     value={formData.confirmPassword}
                                     onChange={handleInputChange}
-                                    required
                                     placeholder={t('confirmPasswordPlaceholder')}
-                                    className={`input input-bordered w-full pl-12 pr-12 rounded-xl focus:outline-primary bg-base-50 focus:bg-white h-14 font-medium text-neutral transition-colors ${errorMsg ? 'border-red-500' : 'border-gray-200'}`}
+                                    className={`input input-bordered w-full pl-12 pr-12 rounded-xl focus:outline-primary h-14 font-medium text-neutral transition-colors ${errors.confirmPassword
+                                            ? 'border-red-400 focus:outline-red-500 bg-red-50/50'
+                                            : 'bg-base-50 focus:bg-white border-gray-200'
+                                        }`}
                                 />
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     onClick={() => toggleVisibility('confirm')}
                                     className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-primary transition-colors"
                                 >
                                     {showPassword.confirm ? <EyeOff size={18} /> : <Eye size={18} />}
                                 </button>
                             </div>
-                            {/* Error Message */}
-                            {errorMsg && (
-                                <p className="text-red-500 text-sm font-bold mt-2">{errorMsg}</p>
+                            {errors.confirmPassword && (
+                                <span className="text-red-500 text-xs mt-1.5 ml-1 font-medium block">
+                                    {errors.confirmPassword}
+                                </span>
                             )}
                         </div>
 
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             disabled={isLoading}
-                            className="btn btn-primary w-full rounded-xl text-white font-bold text-lg h-14 mt-4 shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all flex items-center justify-center gap-2"
+                            className="btn btn-primary w-full rounded-xl text-white font-bold text-lg h-14 mt-4 shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {isLoading ? (
                                 <span className="loading loading-spinner loading-md"></span>
@@ -147,7 +221,7 @@ const ResetPasswordForm = () => {
                 </motion.div>
             ) : (
                 /* SUCCESS STATE */
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="text-center space-y-6 p-6 sm:p-8 bg-base-50 rounded-[2rem] border border-gray-100"
@@ -160,11 +234,11 @@ const ResetPasswordForm = () => {
                             {t('successTitle')}
                         </h2>
                         <p className="text-gray-500 font-medium text-sm leading-relaxed mb-8">
-                            {t('successMessage')}
+                            {apiSuccessMsg || t('successMessage')}
                         </p>
-                        
-                        <Link 
-                            href="/login" 
+
+                        <Link
+                            href="/login"
                             className="btn btn-primary w-full rounded-xl text-white font-bold h-12 sm:h-14 flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
                         >
                             {t('loginButton')} <ArrowRight size={18} />
@@ -183,7 +257,7 @@ const ResetPasswordPage = () => {
     return (
         <div className="min-h-screen w-full flex items-center justify-center bg-base-200 p-4 sm:p-8">
             <div className="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl min-h-[80vh]">
-                
+
                 {/* Left Column: Branding */}
                 <div className="flex w-full md:w-1/2 bg-neutral text-white relative flex-col justify-center p-8 sm:p-12 lg:p-16 overflow-hidden">
                     <div className="absolute inset-0 opacity-20 pointer-events-none">

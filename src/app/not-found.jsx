@@ -5,14 +5,14 @@ import { usePathname } from 'next/navigation'; // 1. Import usePathname to read 
 import { motion } from 'framer-motion';
 import { HiOutlineArrowNarrowLeft, HiOutlineSearch } from 'react-icons/hi';
 import { BiPulse } from 'react-icons/bi';
-import { useTranslations, NextIntlClientProvider } from 'next-intl'; 
+import { useTranslations, NextIntlClientProvider } from 'next-intl';
 import './globals.css';
 
-import { Noto_Sans_Bengali } from 'next/font/google'; 
+import { Noto_Sans_Bengali } from 'next/font/google';
 const font = Noto_Sans_Bengali({ subsets: ['bengali'] });
 
 // 2. Import BOTH translation files
-import bnMessages from '../messages/bn.json'; 
+import bnMessages from '../messages/bn.json';
 import enMessages from '../messages/en.json';
 
 // 3. Accept 'locale' as a prop so we can fix the button links
@@ -80,10 +80,10 @@ const NotFoundContent = ({ locale }) => {
 
 const NotFound = () => {
   const pathname = usePathname();
-  
+
   // 5. Check the URL. If it starts with "/en", set the locale to English. Otherwise, Bengali.
   const locale = pathname?.startsWith('/en') ? 'en' : 'bn';
-  
+
   // 6. Select the matching JSON file
   const messages = locale === 'en' ? enMessages : bnMessages;
 
@@ -92,7 +92,11 @@ const NotFound = () => {
     <html lang={locale} data-theme="rokto-din">
       <body className={`${font.className} bg-base-100 text-base-content min-h-screen`}>
         {/* Pass the dynamically chosen locale and messages to the Provider */}
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider
+          locale={locale}
+          messages={messages}
+          timeZone="Asia/Dhaka"
+        >
           <NotFoundContent locale={locale} />
         </NextIntlClientProvider>
       </body>

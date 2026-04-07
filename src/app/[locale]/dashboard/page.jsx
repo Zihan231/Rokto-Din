@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Droplets, MapPin, Clock, HeartHandshake } from 'lucide-react';
 import Link from 'next/link';
@@ -7,10 +7,51 @@ import { useTranslations } from 'next-intl';
 import AuthContext from '@/hooks/AuthContext/AuthContext';
 // Ensure this path matches your project structure
 import Loading from '@/components/Loading/Loading';
+import useAxiosSecure from '@/hooks/axiosSecure/useAxiosSecure'; // Added import
 
 const DashboardPage = () => {
     const t = useTranslations('DashboardPage');
     const { user, loading } = useContext(AuthContext);
+    //console.log(user);
+    const axiosSecure = useAxiosSecure(); // Initialized hook
+    const [recentActivity, setRecentActivity] = useState([]); // State for table data
+
+    // --- FETCH RECENT ACTIVITY ---
+    useEffect(() => {
+        const fetchRecentActivity = async () => {
+            try {
+                const res = await axiosSecure.get(`/donor/donation-records`, {
+                    params: { limit: 2 } // Limit to 2, no pagination
+                });
+
+                const records = res.data?.data || [];
+
+                // Format the API data to match your existing UI structure
+                const formattedRecords = records.map(record => {
+                    const dateObj = new Date(record.donationDate);
+                    const formattedDate = dateObj.toLocaleDateString('en-GB', {
+                        day: 'numeric', month: 'short', year: 'numeric'
+                    });
+
+                    return {
+                        id: record.recordId || record.id,
+                        date: formattedDate,
+                        hospital: record.hospitalName,
+                        bag: record.unitsDonated
+                    };
+                });
+
+                setRecentActivity(formattedRecords);
+            } catch (error) {
+                console.error("Failed to fetch recent activity:", error);
+            }
+        };
+
+        // Only fetch if user is fully loaded and logged in
+        if (user) {
+            fetchRecentActivity();
+        }
+    }, [axiosSecure, user]);
 
     // --- 1. LOADING STATE ---
     // Pass custom text so it doesn't say "Finding donors..."
@@ -81,11 +122,6 @@ const DashboardPage = () => {
         },
     ];
 
-    const recentActivity = [
-        { id: 1, date: "12 Jan 2026", hospital: "Dhaka Medical College", bag: 1 },
-        { id: 2, date: "15 Aug 2025", hospital: "Square Hospital", bag: 1 }
-    ];
-
     return (
         <div className="space-y-8">
             {/* Welcome Card */}
@@ -133,46 +169,63 @@ const DashboardPage = () => {
             </div>
 
             {/* Recent Activity Table */}
-            <div className="bg-white rounded-4xl md:rounded-[2.5rem] p-6 md:p-10 border border-base-300 shadow-sm overflow-hidden">
-                <div className="flex justify-between items-center mb-6 md:mb-8">
+            <div className="bg-white rounded-3xl md:rounded-[2.5rem] p-5 md:p-10 border border-base-300 shadow-sm overflow-hidden w-full">
+                <div className="flex justify-between items-center mb-5 md:mb-8">
                     <h3 className="text-lg md:text-xl font-black text-neutral">{t('activity.title')}</h3>
-                    <Link href="/dashboard/history" className="btn btn-ghost btn-sm text-primary font-bold">{t('activity.viewAll')}</Link>
+                    <Link href="/dashboard/history" className="btn btn-ghost btn-xs md:btn-sm text-primary font-bold">{t('activity.viewAll')}</Link>
                 </div>
 
-                <div className="overflow-x-auto">
-                    <table className="table w-full border-separate border-spacing-y-3 min-w-150">
+                <div className="overflow-x-auto w-full">
+                    {/* Removed min-w-150 so it can shrink on mobile */}
+                    <table className="table w-full border-separate border-spacing-y-2 md:border-spacing-y-3">
                         <thead>
-                            <tr className="text-gray-400 border-none uppercase text-[10px] tracking-widest text-left">
-                                <th className="bg-transparent pl-6">{t('activity.headers.date')}</th>
-                                <th className="bg-transparent">{t('activity.headers.hospital')}</th>
-                                <th className="bg-transparent text-right pr-6">{t('activity.headers.quantity')}</th>
+                            <tr className="text-gray-400 border-none uppercase text-[9px] md:text-[10px] tracking-widest text-left">
+                                <th className="bg-transparent pl-4 md:pl-6 py-2 md:py-3">{t('activity.headers.date')}</th>
+                                <th className="bg-transparent px-2 md:px-4 py-2 md:py-3">{t('activity.headers.hospital')}</th>
+                                <th className="bg-transparent text-right pr-4 md:pr-6 py-2 md:py-3">{t('activity.headers.quantity')}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {recentActivity.map((row, i) => (
-                                <tr key={i} className="bg-base-50 group hover:bg-base-200 transition-colors">
-                                    <td className="rounded-l-2xl pl-6 py-4 font-bold text-neutral">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
-                                                <Calendar size={14} />
+                            {recentActivity.length > 0 ? (
+                                recentActivity.map((row, i) => (
+                                    <tr key={i} className="bg-base-50 group hover:bg-base-200 transition-colors">
+                                        {/* Date */}
+                                        <td className="rounded-l-xl md:rounded-l-2xl pl-4 md:pl-6 py-3 md:py-4 font-bold text-neutral align-middle w-[30%] md:w-auto">
+                                            <div className="flex items-center gap-2 md:gap-3">
+                                                {/* Hide icon on mobile */}
+                                                <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-blue-50 text-blue-500 hidden sm:flex items-center justify-center shrink-0">
+                                                    <Calendar size={14} className="md:w-3.5 md:h-3.5" />
+                                                </div>
+                                                <span className="text-[11px] sm:text-xs md:text-base leading-tight">{row.date}</span>
                                             </div>
-                                            {row.date}
-                                        </div>
-                                    </td>
-                                    <td className="py-4">
-                                        <div className="flex items-center gap-2 font-medium text-gray-500">
-                                            <MapPin size={16} className="text-primary shrink-0" />
-                                            {row.hospital}
-                                        </div>
-                                    </td>
-                                    <td className="rounded-r-2xl pr-6 text-right py-4">
-                                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/5 text-primary rounded-full font-black text-xs border border-primary/10">
-                                            <Droplets size={12} className="fill-primary" />
-                                            {t('activity.bagCount', { count: row.bag })}
-                                        </div>
+                                        </td>
+
+                                        {/* Hospital */}
+                                        <td className="py-3 md:py-4 px-2 md:px-4 align-middle">
+                                            <div className="flex items-center gap-1 md:gap-2 font-medium text-gray-500">
+                                                {/* Hide icon on mobile */}
+                                                <MapPin size={14} className="text-primary shrink-0 hidden sm:block md:w-4 md:h-4" />
+                                                {/* Allow text to wrap */}
+                                                <span className="text-[11px] font-bold sm:text-xs md:text-base wrap-break-word leading-tight">{row.hospital}</span>
+                                            </div>
+                                        </td>
+
+                                        {/* Quantity */}
+                                        <td className="rounded-r-xl md:rounded-r-2xl pr-4 md:pr-6 text-right py-3 md:py-4 align-middle w-[25%] md:w-auto">
+                                            <div className="inline-flex items-center gap-1 md:gap-2 px-2 py-1 md:px-3 md:py-1.5 bg-primary/5 text-primary rounded-full font-black text-[10px] md:text-xs border border-primary/10">
+                                                <Droplets size={10} className="fill-primary shrink-0 md:w-3 md:h-3" />
+                                                {t('activity.bagCount', { count: row.bag })}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="3" className="text-center py-6 text-gray-400 font-medium bg-base-50 rounded-xl md:rounded-2xl text-xs md:text-sm">
+                                        No recent donations found.
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>

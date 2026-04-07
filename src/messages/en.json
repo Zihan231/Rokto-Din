@@ -444,7 +444,12 @@
     "title": "Donation History",
     "subtitle": "Records of your noble deeds are saved below.",
     "downloadBtn": "Download Record",
+    "addRecordBtn": "Add Record",
     "searchPlaceholder": "Search Hospital...",
+    "searchBtn": "Search",
+    "emptyState": "No donation records found.",
+    "sortNewest": "Newest First",
+    "sortOldest": "Oldest First",
     "table": {
       "date": "Date",
       "hospital": "Hospital",
@@ -463,6 +468,16 @@
       "bagUnit": "{count} Bag",
       "saveBtn": "Save Record",
       "saving": "Saving..."
+    },
+    "errors": {
+      "dateEmpty": "Donation date can not be empty",
+      "dateInvalid": "Must be a valid date string (YYYY-MM-DD)",
+      "hospitalEmpty": "Hospital name can not be empty",
+      "bagsInvalid": "Units donated must be a number"
+    },
+    "status": {
+      "success": "Donation record created successfully!",
+      "error": "Failed to create donation record. Please try again."
     }
   },
   "Loading": {
@@ -487,11 +502,23 @@
     "currentPasswordPlaceholder": "Enter current password",
     "forgotPassword": "Forgot password?",
     "newPassword": "New Password",
-    "newPasswordPlaceholder": "Enter a new strong password",
+    "newPasswordPlaceholder": "Enter a new strong password (e.g., Hello@123)",
     "passwordHint": "Try to use at least 8 characters and numbers.",
     "confirmPassword": "Confirm New Password",
     "confirmPasswordPlaceholder": "Re-enter the password",
-    "updateButton": "Update Password"
+    "updateButton": "Update Password",
+    "errors": {
+      "emptyCurrent": "Current password can not be empty",
+      "emptyNew": "Password can not be empty",
+      "length": "Password must be between 6 and 20 characters",
+      "regex": "Password must contain at least one uppercase letter, one lowercase letter, and one special character",
+      "emptyConfirm": "Please confirm your password",
+      "mismatch": "Passwords do not match"
+    },
+    "status": {
+      "success": "Password changed successfully!",
+      "error": "Failed to update password. Please check your current password and try again."
+    }
   },
   "ForgotPassword": {
     "sideTitle": "Every donation is a story of saving a life.",
@@ -519,6 +546,17 @@
     "successTitle": "Password Reset Successful!",
     "successMessage": "Your password has been changed successfully. You can now use your new password to log in to your account.",
     "loginButton": "Go to Login",
-    "errorMismatch": "Passwords do not match. Please check again."
+    "errors": {
+      "missingToken": "Invalid or missing password reset token in the URL.",
+      "emptyNew": "Password can not be empty",
+      "length": "Password must be between 6 and 20 characters",
+      "regex": "Password must contain at least one uppercase letter, one lowercase letter, and one special character",
+      "emptyConfirm": "Please confirm your password",
+      "mismatch": "Passwords do not match. Please check again."
+    },
+    "status": {
+      "success": "Password reset successfully!",
+      "error": "Failed to reset password. The link might be expired or invalid."
+    }
   }
 }

@@ -2,7 +2,8 @@
 import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { Mail, Lock, Eye, EyeOff, Droplets, UserPlus, ArrowRightCircle, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion'; // Added framer-motion
+import { Mail, Lock, Eye, EyeOff, Droplets, UserPlus, ArrowRightCircle, ArrowRight, AlertCircle } from 'lucide-react'; // Added AlertCircle
 import useAxios from '@/hooks/axios/useAxios';
 import AuthContext from '@/hooks/AuthContext/AuthContext';
 import useAxiosSecure from '@/hooks/axiosSecure/useAxiosSecure';
@@ -17,9 +18,10 @@ const LoginPage = () => {
     const [error, setError] = useState(null);
     const router = useRouter();
     const { user, setUser, fetchUserProfile } = useContext(AuthContext);
+
     const checkError = (email, password) => {
         if (!email || !password) {
-            return "**Email and Password are required**";
+            return "Email and Password are required"; // Removed **
         }
         return null;
     }
@@ -27,26 +29,33 @@ const LoginPage = () => {
     // login handler
     const handleLogin = async (e) => {
         e.preventDefault();
+
         const errorMsg = checkError(email, password);
         if (errorMsg) {
             setError(errorMsg);
             return;
         }
+
         try {
-            const res = await axiosSecure.post("auth/login", { email, password });
+            const loginRes = await axiosSecure.post("/auth/login", { email, password });
+            console.log("login success:", loginRes.data);
+
             const userData = await fetchUserProfile();
+            // console.log("profile success:", userData);
+
             setUser(userData);
             setError(null);
             router.push("/dashboard");
         } catch (err) {
+            console.log("actual error:", err.response?.status, err.response?.data || err);
+
             if (err.response?.status === 401) {
-                setError("**Invalid email or password**")
+                setError("Login worked, but profile fetch is unauthorized.");
             } else {
-                setError("**An error occurred. Please try again later.**")
+                setError("An error occurred. Please try again later.");
             }
-            console.log(err);
         }
-    }
+    };
 
     return (
         <div className="min-h-screen bg-white md:bg-base-200 flex items-center justify-center md:p-4 mb-10">
@@ -87,9 +96,23 @@ const LoginPage = () => {
                                 </button>
                             </div>
                         </div>
-                        <div>
-                            {error && <p className="text-sm text-primary text-center font-medium mt-2">{error}</p>}
-                        </div>
+
+                        {/* Beautiful Animated Error State */}
+                        <AnimatePresence>
+                            {error && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    className="overflow-hidden"
+                                >
+                                    <div className="mt-2 p-4 rounded-2xl flex items-start gap-3 bg-red-50 text-red-700 border border-red-200">
+                                        <AlertCircle className="mt-0.5 shrink-0" size={18} />
+                                        <p className="text-sm font-semibold">{error}</p>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         {/* Login Btn */}
                         <button onClick={handleLogin} className="btn btn-primary btn-lg w-full rounded-2xl text-white shadow-lg shadow-primary/20 mt-4 gap-3 border-none">

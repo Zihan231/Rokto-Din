@@ -31,7 +31,7 @@ const AuthGuard = ({ children }) => {
                 </div>
                 
                 <p className="text-sm font-black text-[#8A1119] animate-pulse tracking-widest uppercase mt-2">
-                    Loading Authentication...
+                    Loading Dashboard...
                 </p>
             </div>
         )

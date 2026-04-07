@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import {
@@ -27,9 +27,53 @@ const ProfilePage = () => {
     const t = useTranslations('ProfilePage');
     const axiosSecure = useAxiosSecure();
     const { user, setUser } = useContext(AuthContext);
+    
+    // --- NEW: Toggle Logic ---
+    // Initialize based on database value
+    const [isAvailable, setIsAvailable] = useState(user?.donationStatus === 'onn');
+
+    // Sync state if user data loads slightly after component mounts
+    useEffect(() => {
+        if (user) {
+            setIsAvailable(user.donationStatus === 'onn');
+        }
+    }, [user?.donationStatus]);
+
+    // Handle Toggle Action
+    const handleStatusChange = async () => {
+        const previousState = isAvailable;
+        const newStatus = isAvailable ? 'off' : 'onn';
+
+        // 1. Optimistic Update (UI updates instantly)
+        setIsAvailable(!previousState);
+        setUser((prev) => ({ ...prev, donationStatus: newStatus }));
+
+        try {
+            // 2. Hit the backend (Assuming controller prefix is 'donor')
+            const res = await axiosSecure.patch(`donor/update-status?status=${newStatus}`);
+            
+            // 3. Show Success Toast
+            setSuccessMessage(res.data?.message || `Status updated to ${newStatus.toUpperCase()}`);
+            setTimeout(() => {
+                setSuccessMessage("");
+            }, 3000);
+
+        } catch (error) {
+            console.error("Failed to update status:", error);
+            
+            // 4. Revert if failed
+            setIsAvailable(previousState);
+            setUser((prev) => ({ ...prev, donationStatus: previousState ? 'onn' : 'off' }));
+            
+            setServerError("Failed to update availability status.");
+            setTimeout(() => {
+                setServerError("");
+            }, 3000);
+        }
+    };
+    // -------------------------
 
     // Form & Modal States
-    const [isAvailable, setIsAvailable] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({});
     
@@ -51,7 +95,6 @@ const ProfilePage = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        // Clear specific error when user starts typing
         if (errors[name]) {
             setErrors({ ...errors, [name]: null });
         }
@@ -62,11 +105,10 @@ const ProfilePage = () => {
         setFormData({
             ...formData,
             division: newDivision,
-            district: "" // Reset district when division changes
+            district: "" 
         });
     };
 
-    // Frontend Validation matching NestJS DTO
     const validate = () => {
         const newErrors = {};
 
@@ -109,17 +151,14 @@ const ProfilePage = () => {
         setIsSubmitting(true);
 
         try {
-            // Remove un-editable fields like id, totalDonation, etc. before sending
             const { id, lastDonation, totalDonation, donationStatus, ...updateData } = formData; 
             
             const res = await axiosSecure.post(`donor/edit-profile`, updateData); 
 
             if (res.status === 200 || res.status === 201) {
-                // Update React Context with new user data
                 setUser((prev) => ({ ...prev, ...updateData }));
-                setIsEditing(false); // Close Modal
+                setIsEditing(false);
 
-                // Trigger Success Toast
                 setSuccessMessage(res.data?.message || "Profile updated successfully!");
                 setTimeout(() => {
                     setSuccessMessage("");
@@ -142,7 +181,7 @@ const ProfilePage = () => {
         return <span className="font-bold text-neutral text-lg">{value}</span>;
     };
 
-    if (!user) return null; // Safety check
+    if (!user) return null; 
 
     return (
         <div className="space-y-6 max-w-5xl mx-auto relative">
@@ -175,15 +214,18 @@ const ProfilePage = () => {
                     <div className="relative z-10 flex flex-col items-center text-center">
                         <p className="font-bold opacity-80 uppercase tracking-widest text-xs mb-4">{t('stats.bloodGroup')}</p>
                         <h2 className="text-6xl font-black mb-2">{user.bloodGroup || "O+"}</h2>
+                        
+                        {/* THE UPDATED TOGGLE */}
                         <div className="mt-4 bg-white/10 p-1 pl-4 rounded-full flex items-center gap-3 backdrop-blur-sm border border-white/20">
                             <span className="text-xs font-bold">{isAvailable ? t('stats.available') : t('stats.unavailable')}</span>
                             <input
                                 type="checkbox"
-                                className="toggle toggle-sm border-white bg-white hover:bg-gray-100 checked:bg-emerald-400 checked:border-emerald-400"
+                                className="toggle toggle-sm border-white bg-white hover:bg-gray-100 checked:bg-emerald-400 checked:border-emerald-400 cursor-pointer"
                                 checked={isAvailable}
-                                onChange={() => setIsAvailable(!isAvailable)}
+                                onChange={handleStatusChange} // Added the new handler
                             />
                         </div>
+
                     </div>
                 </motion.div>
 
@@ -434,7 +476,7 @@ const ProfilePage = () => {
                         initial={{ opacity: 0, y: 50, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.9 }}
-                        className="toast toast-bottom toast-center sm:toast-end z-[100]"
+                        className="toast toast-bottom toast-center sm:toast-end z-100"
                     >
                         <div className="alert alert-success text-white shadow-xl rounded-2xl flex gap-2 items-center px-6 py-4">
                             <ShieldCheck size={20} className="shrink-0" />
