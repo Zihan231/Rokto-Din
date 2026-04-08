@@ -17,7 +17,7 @@ const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
-  const { user,setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   // Language Switch Logic
   const handleLanguageSwitch = () => {
@@ -41,30 +41,50 @@ const Navbar = () => {
       console.log(err);
     }
   }
+  const isActive = (href) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
   const navLinks = (
     <>
       <li>
-        <Link href="/" className="hover:text-primary transition-colors flex items-center gap-2">
+        <Link
+          href="/"
+          className={`${isActive("/") ? "text-primary" : ""} hover:text-primary transition-colors flex items-center gap-2`}
+        >
           <HiOutlineHome className="text-xl" /> Home
         </Link>
       </li>
       <li>
-        <Link href="/find-donors" className="hover:text-primary transition-colors flex items-center gap-2">
+        <Link
+          href="/find-donors"
+          className={`${isActive("/find-donors") ? "text-primary" : ""} hover:text-primary transition-colors flex items-center gap-2`}
+        >
           <HiOutlineSearch className="text-xl" /> Find Donors
         </Link>
       </li>
       <li>
-        <Link href="/blog" className="hover:text-primary transition-colors flex items-center gap-2">
+        <Link
+          href="/blog"
+          className={`${isActive("/blog") ? "text-primary" : ""} hover:text-primary transition-colors flex items-center gap-2`}
+        >
           <HiOutlineDocumentText className="text-xl" /> Blog
         </Link>
       </li>
       <li>
-        <Link href="/about" className="hover:text-primary transition-colors flex items-center gap-2">
+        <Link
+          href="/about"
+          className={`${isActive("/about") ? "text-primary" : ""} hover:text-primary transition-colors flex items-center gap-2`}
+        >
           <HiOutlineInformationCircle className="text-xl" /> About
         </Link>
       </li>
       <li>
-        <Link href="/contact" className="hover:text-primary transition-colors flex items-center gap-2">
+        <Link
+          href="/contact"
+          className={`${isActive("/contact") ? "text-primary" : ""} hover:text-primary transition-colors flex items-center gap-2`}
+        >
           <HiOutlineMail className="text-xl" /> Contact
         </Link>
       </li>

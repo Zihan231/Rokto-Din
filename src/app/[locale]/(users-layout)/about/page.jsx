@@ -11,7 +11,7 @@ import {
 import { FiLinkedin } from "react-icons/fi";
 import Link from 'next/link';
 import { FaFacebook, FaGithub } from 'react-icons/fa';
-
+import Image from 'next/image';
 const AboutPage = () => {
     const t = useTranslations('AboutPage');
 
@@ -207,10 +207,13 @@ const AboutPage = () => {
                             className="group relative bg-white p-8 md:p-12 rounded-[4rem] shadow-2xl shadow-gray-200/50 flex flex-col items-center text-center border border-white transition-all duration-500"
                         >
                             <div className="relative mb-8">
-                                <div className="w-48 h-48 md:w-56 md:h-56 rounded-[3rem] overflow-hidden bg-neutral border-[6px] border-white shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
-                                    <div className="w-full h-full bg-linear-to-tr from-neutral to-gray-700 flex items-center justify-center text-white text-4xl font-black">
-                                        MZ
-                                    </div>
+                                <div className="w-64 h-64 md:w-90 md:h-90 rounded-[3rem] overflow-hidden bg-neutral border-[6px] border-white shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500 relative">
+                                    <Image
+                                        src="/images/zihan.jpg"
+                                        alt="Zihan"
+                                        fill
+                                        className="object-cover"
+                                    />
                                 </div>
                                 <div className="absolute -bottom-2 -right-2 bg-primary text-white p-4 rounded-2xl shadow-xl shadow-primary/40 -rotate-12 group-hover:rotate-0 transition-all duration-500">
                                     <Code size={24} strokeWidth={3} />
@@ -225,10 +228,12 @@ const AboutPage = () => {
                                 {t('team.members.zihan.desc')}
                             </p>
                             <div className="flex gap-4 mt-8">
-                                <Link href="#" className="w-12 h-12 rounded-2xl bg-base-50 flex items-center justify-center text-neutral hover:bg-primary hover:text-white transition-all duration-300">
+                                <Link target="_blank"
+                                    rel="noopener noreferrer" href="https://github.com/zihan231" className="w-12 h-12 rounded-2xl bg-base-50 flex items-center justify-center text-neutral hover:bg-primary hover:text-white transition-all duration-300">
                                     <FaGithub size={20} />
                                 </Link>
-                                <Link href="#" className="w-12 h-12 rounded-2xl bg-base-50 flex items-center justify-center text-neutral hover:bg-primary hover:text-white transition-all duration-300">
+                                <Link target="_blank"
+                                    rel="noopener noreferrer" href="https://www.linkedin.com/in/zihan231" className="w-12 h-12 rounded-2xl bg-base-50 flex items-center justify-center text-neutral hover:bg-primary hover:text-white transition-all duration-300">
                                     <FiLinkedin size={20} />
                                 </Link>
                             </div>
@@ -242,10 +247,13 @@ const AboutPage = () => {
                             className="group relative bg-white p-8 md:p-12 rounded-[4rem] shadow-2xl shadow-gray-200/50 flex flex-col items-center text-center border border-white transition-all duration-500"
                         >
                             <div className="relative mb-8">
-                                <div className="w-48 h-48 md:w-56 md:h-56 rounded-[3rem] overflow-hidden bg-neutral border-[6px] border-white shadow-2xl -rotate-3 group-hover:rotate-0 transition-transform duration-500">
-                                    <div className="w-full h-full bg-linear-to-tr from-neutral to-gray-700 flex items-center justify-center text-white text-4xl font-black">
-                                        PN
-                                    </div>
+                                <div className="w-64 h-64 md:w-90 md:h-90 rounded-[3rem] overflow-hidden bg-neutral border-[6px] border-white shadow-2xl -rotate-3 group-hover:rotate-0 transition-transform duration-500 relative">
+                                    <Image
+                                        src="/images/emtiaz.png"
+                                        alt="Emtiaz"
+                                        fill
+                                        className="object-cover"
+                                    />
                                 </div>
                                 <div className="absolute -bottom-2 -left-2 bg-emerald-500 text-white p-4 rounded-2xl shadow-xl shadow-emerald-500/40 rotate-12 group-hover:rotate-0 transition-all duration-500">
                                     <Megaphone size={24} strokeWidth={3} />
@@ -260,10 +268,12 @@ const AboutPage = () => {
                                 {t('team.members.emtiaz.desc')}
                             </p>
                             <div className="flex gap-4 mt-8">
-                                <Link href="#" className="w-12 h-12 rounded-2xl bg-base-50 flex items-center justify-center text-neutral hover:bg-emerald-500 hover:text-white transition-all duration-300">
+                                <Link target="_blank"
+                                    rel="noopener noreferrer" href="#" className="w-12 h-12 rounded-2xl bg-base-50 flex items-center justify-center text-neutral hover:bg-emerald-500 hover:text-white transition-all duration-300">
                                     <FiLinkedin size={20} />
                                 </Link>
-                                <Link href="#" className="w-12 h-12 rounded-2xl bg-base-50 flex items-center justify-center text-neutral hover:bg-emerald-500 hover:text-white transition-all duration-300">
+                                <Link target="_blank"
+                                    rel="noopener noreferrer" href="https://www.facebook.com/fajla.rabby.92351" className="w-12 h-12 rounded-2xl bg-base-50 flex items-center justify-center text-neutral hover:bg-emerald-500 hover:text-white transition-all duration-300">
                                     <FaFacebook size={20} />
                                 </Link>
                             </div>
