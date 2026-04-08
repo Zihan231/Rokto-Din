@@ -73,7 +73,7 @@ const Footer = () => {
               <a href="#" className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary transition-all duration-300">
                 <FaFacebookF className="text-lg" />
               </a>
-              <a href="#" className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary transition-all duration-300">
+              <a href="https://www.linkedin.com/in/zihan231" className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary transition-all duration-300">
                 <FaLinkedinIn className="text-lg" />
               </a>
               <a href="#" className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary transition-all duration-300">
@@ -84,11 +84,11 @@ const Footer = () => {
             <ul className="space-y-4 text-center md:text-left">
               <li className="flex items-center justify-center md:justify-start gap-3 text-gray-400">
                 <HiOutlineMail className="text-xl text-primary" />
-                <span>support@roktodin.com</span>
+                <span>Zihanislam231@gmail.com</span>
               </li>
               <li className="flex items-center justify-center md:justify-start gap-3 text-gray-400">
                 <HiOutlinePhone className="text-xl text-primary" />
-                <span>+880 1XXX XXXXXX</span>
+                <span>+880 1799 246459</span>
               </li>
             </ul>
           </div>

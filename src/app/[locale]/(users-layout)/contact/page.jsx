@@ -1,13 +1,12 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useTranslations } from 'next-intl'; // Import the hook
+import { useTranslations } from 'next-intl';
 import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker } from 'react-icons/hi';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { BiTimeFive } from 'react-icons/bi';
 
 const ContactUs = () => {
-  // Hook to get translations
   const t = useTranslations('ContactPage');
 
   const fadeInUp = {
@@ -15,25 +14,27 @@ const ContactUs = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
-  // Define contact items dynamically to use translations
   const contactItems = [
-    { 
-      icon: <HiOutlineMail />, 
-      title: t('info.emailTitle'), 
-      detail: "support@roktodin.com", 
-      color: "bg-red-50 text-primary" 
+    {
+      icon: <HiOutlineMail />,
+      title: t('info.emailTitle'),
+      detail: "Zihanislam231@gmail.com",
+      color: "bg-red-50 text-primary",
+      href: "mailto:Zihanislam231@gmail.com"
     },
-    { 
-      icon: <HiOutlinePhone />, 
-      title: t('info.phoneTitle'), 
-      detail: "+880 1XXX XXXXXX", 
-      color: "bg-red-50 text-primary" 
+    {
+      icon: <HiOutlinePhone />,
+      title: t('info.phoneTitle'),
+      detail: "+880 1799 246459",
+      color: "bg-red-50 text-primary",
+      href: "tel:+8801799246459"
     },
-    { 
-      icon: <HiOutlineLocationMarker />, 
-      title: t('info.addressTitle'), 
-      detail: t('info.addressDetail'), 
-      color: "bg-red-50 text-primary" 
+    {
+      icon: <HiOutlineLocationMarker />,
+      title: t('info.addressTitle'),
+      detail: t('info.addressDetail'),
+      color: "bg-red-50 text-primary",
+      href: null // CHANGED: no link for address
     }
   ];
 
@@ -124,24 +125,42 @@ const ContactUs = () => {
             viewport={{ once: true }}
             className="order-2 lg:order-1 lg:col-span-1 space-y-4"
           >
-            {contactItems.map((item, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-base-200 flex items-center gap-5 hover:shadow-md transition-all">
-                <div className={`text-3xl p-4 rounded-xl ${item.color}`}>
-                  {item.icon}
+            {contactItems.map((item, idx) =>
+              item.href ? (
+                <a
+                  key={idx}
+                  href={item.href}
+                  className="bg-white p-6 rounded-2xl shadow-sm border border-base-200 flex items-center gap-5 hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className={`text-3xl p-4 rounded-xl ${item.color}`}>
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-neutral">{item.title}</h4>
+                    <p className="text-gray-500 font-medium">{item.detail}</p>
+                  </div>
+                </a>
+              ) : (
+                <div
+                  key={idx}
+                  className="bg-white p-6 rounded-2xl shadow-sm border border-base-200 flex items-center gap-5 hover:shadow-md transition-all"
+                >
+                  <div className={`text-3xl p-4 rounded-xl ${item.color}`}>
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-neutral">{item.title}</h4>
+                    <p className="text-gray-500 font-medium">{item.detail}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-bold text-neutral">{item.title}</h4>
-                  <p className="text-gray-500 font-medium">{item.detail}</p>
-                </div>
-              </div>
-            ))}
+              )
+            )}
 
             <div className="bg-primary/5 p-6 rounded-2xl border border-primary/10 flex items-center gap-4">
               <div className='text-3xl text-primary animate-pulse'>
                 <BiTimeFive />
               </div>
               <p className="text-sm font-semibold text-gray-700">
-                {/* Rich text translation for specific styling */}
                 {t.rich('info.responseTime', {
                   highlight: (chunks) => <span className="text-primary font-bold text-lg">{chunks}</span>
                 })}
