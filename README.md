@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Rokto Din Client
+
+Rokto Din is a bilingual (Bangla/English) blood donation platform for Bangladesh.  
+This repository contains the Next.js frontend used for:
+
+- finding blood donors by blood group and location
+- donor registration, login, and password recovery
+- secure donor dashboard features (profile, donation records, availability status, PDF export)
+
+## Core Features
+
+- Public donor search with filters:
+  - blood group
+  - division
+  - district
+- Localized UI with `next-intl` (`bn` default, `en` supported)
+- Cookie-based authentication flow through Next.js API routes
+- Donor dashboard:
+  - profile management
+  - donation entry and history
+  - availability toggle
+  - downloadable donation history PDF
+- Responsive UI built with Tailwind CSS + DaisyUI + Framer Motion
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- Tailwind CSS 4 + DaisyUI 5
+- next-intl
+- Axios
+- jsPDF + jspdf-autotable
+
+## Project Structure
+
+```text
+src/
+  app/
+    [locale]/               # Localized routes
+      (users-layout)/       # Public pages
+      dashboard/            # Protected donor dashboard
+    api/                    # Next.js API routes (proxy + auth helpers)
+  components/               # UI sections and feature components
+  hooks/                    # Auth context and axios clients
+  i18n/                     # Locale routing and request config
+  messages/                 # Translation files (bn.json, en.json)
+```
 
 ## Getting Started
 
-First, run the development server:
+### 1. Prerequisites
+
+- Node.js 20+
+- npm 10+
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+
+Create a `.env.local` file in the project root:
+
+```env
+BACKEND_URL=https://your-backend-url.com
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
+```
+
+Notes:
+
+- `BACKEND_URL` is required for server-side proxy/auth routes under `src/app/api/*`.
+- `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` is only needed if you enable/use the custom ReCAPTCHA component.
+- Public axios calls are currently hardcoded to `https://rokto-din-server.vercel.app` in `src/hooks/axios/useAxios.jsx`. Update that file if you want full environment-based switching.
+
+### 4. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app runs on `http://localhost:3001`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` - start dev server on port 3001
+- `npm run build` - create production build
+- `npm run start` - run production server
+- `npm run lint` - run ESLint
 
-## Learn More
+## Internationalization
 
-To learn more about Next.js, take a look at the following resources:
+- Locales: `bn`, `en`
+- Default locale: `bn`
+- Locale-aware routes are managed with `next-intl` middleware and routing helpers in:
+  - `src/i18n/routing.js`
+  - `src/proxy.js`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API and Authentication Architecture
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Secure client requests use `useAxiosSecure` (`/api` base URL).
+- Next.js API routes forward requests to `BACKEND_URL` and pass JWT cookie to backend.
+- Login and logout are handled by:
+  - `src/app/api/auth/login/route.js`
+  - `src/app/api/auth/logout/route.js`
+- Generic backend proxy route:
+  - `src/app/api/[...path]/route.js`
 
-## Deploy on Vercel
+## Build and Production
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+npm run start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For deployment, ensure:
+
+- `BACKEND_URL` is set in your hosting environment
+- secure cookie behavior matches your deployment domain and HTTPS setup
+
+## Contributing
+
+1. Create a feature branch.
+2. Make focused changes with clear commit messages.
+3. Run lint/build before opening a pull request.
