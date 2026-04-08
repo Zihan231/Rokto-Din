@@ -1,33 +1,116 @@
 "use client";
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState, useRef } from 'react';
+import { motion, animate, useInView } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Users, HeartHandshake, MapPin, Headset } from 'lucide-react';
+import useAxios from '@/hooks/axios/useAxios';
+
+// 1️⃣ NEW HELPER: Splits a string into numbers and text.
+// "24/7" becomes -> [{isNum: true, val: 24}, {isNum: false, val: "/"}, {isNum: true, val: 7}]
+const parseStatString = (str) => {
+    if (!str) return [];
+    const stringVal = String(str);
+    // Split by digits, keeping the digits in the resulting array
+    const chunks = stringVal.split(/(\d+)/).filter(Boolean);
+    
+    return chunks.map(chunk => {
+        if (/^\d+$/.test(chunk)) {
+            return { isNumber: true, value: parseInt(chunk, 10) };
+        }
+        return { isNumber: false, value: chunk };
+    });
+};
+
+// 2️⃣ NEW COUNTER: Animates a "progress" from 0 to 1, multiplying all numbers by it!
+const AnimatedCounter = ({ parts, startAnimation }) => {
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        if (startAnimation) {
+            const animation = animate(0, 1, {
+                duration: 2,
+                ease: "easeOut",
+                onUpdate: (latest) => {
+                    setProgress(latest);
+                },
+            });
+            return animation.stop;
+        }
+    }, [startAnimation]);
+
+    return (
+        <span>
+            {parts.map((part, index) => (
+                <React.Fragment key={index}>
+                    {/* If it's a number, multiply target by progress. If text, render exactly as is. */}
+                    {part.isNumber ? Math.round(part.value * progress) : part.value}
+                </React.Fragment>
+            ))}
+        </span>
+    );
+};
 
 const SiteStats = () => {
     const t = useTranslations('SiteStats');
+    const api = useAxios();
+    
+    const [dbStats, setDbStats] = useState({ donors: 0, donations: 0 });
+    const [isLoading, setIsLoading] = useState(true);
 
-    // Configuration for icons and keys (text comes from JSON)
+    const containerRef = useRef(null);
+    const isInView = useInView(containerRef, { once: true, margin: "-50px" }); 
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                setIsLoading(true);
+                const response = await api.get('/user/counts');
+                setDbStats({
+                    donors: response.data?.data?.totalDonors || 0,
+                    donations: response.data?.data?.totalDonations || 0,
+                });
+            } catch (error) {
+                console.error("Failed to fetch site stats:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchStats();
+    }, [api]);
+
+    // 3️⃣ Configuration using the new "parts" structure
     const statConfig = [
         {
             key: "donors",
             icon: <Users className="w-6 h-6" />,
-            bg: "bg-red-50"
+            bg: "bg-red-50",
+            parts: [
+                { isNumber: true, value: dbStats.donors },
+                { isNumber: false, value: "+" }
+            ]
         },
         {
             key: "donations",
             icon: <HeartHandshake className="w-6 h-6" />,
-            bg: "bg-red-50"
+            bg: "bg-red-50",
+            parts: [
+                { isNumber: true, value: dbStats.donations },
+                { isNumber: false, value: "+" }
+            ]
         },
         {
             key: "cities",
             icon: <MapPin className="w-6 h-6" />,
-            bg: "bg-red-50"
+            bg: "bg-red-50",
+            parts: parseStatString(t('cities.value'))
         },
         {
             key: "support",
             icon: <Headset className="w-6 h-6" />,
-            bg: "bg-red-50"
+            bg: "bg-red-50",
+            // Automatically parses "24/7" into the animatable chunks!
+            parts: parseStatString(t('support.value')) 
         }
     ];
 
@@ -47,6 +130,7 @@ const SiteStats = () => {
     return (
         <section className="mx-auto px-4 md:px-8 my-20">
             <motion.div
+                ref={containerRef}
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
@@ -64,9 +148,16 @@ const SiteStats = () => {
                             {stat.icon}
                         </div>
                         
-                        {/* Value */}
-                        <h4 className="text-3xl md:text-5xl font-black text-primary mb-2 tracking-tighter">
-                            {t(`${stat.key}.value`)}
+                        {/* Value rendering */}
+                        <h4 className="text-3xl md:text-5xl font-black text-primary mb-2 tracking-tighter min-h-[48px] flex items-center justify-center">
+                            {isLoading && (stat.key === "donors" || stat.key === "donations") ? (
+                                <div className="w-6 h-6 border-4 border-gray-200 border-t-primary rounded-full animate-spin"></div>
+                            ) : (
+                                <AnimatedCounter 
+                                    parts={stat.parts} 
+                                    startAnimation={isInView && (!isLoading || (stat.key !== "donors" && stat.key !== "donations"))} 
+                                />
+                            )}
                         </h4>
                         
                         {/* Label */}
@@ -74,7 +165,7 @@ const SiteStats = () => {
                             {t(`${stat.key}.label`)}
                         </p>
 
-                        {/* Divider Line (Desktop only) - Hides on the last item */}
+                        {/* Divider Line */}
                         {index !== statConfig.length - 1 && (
                             <div className="hidden lg:block absolute -right-2 top-1/4 h-1/2 w-px bg-gray-100" />
                         )}

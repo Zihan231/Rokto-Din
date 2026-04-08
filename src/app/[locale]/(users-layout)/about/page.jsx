@@ -12,6 +12,7 @@ import { FiLinkedin } from "react-icons/fi";
 import Link from 'next/link';
 import { FaFacebook, FaGithub } from 'react-icons/fa';
 import Image from 'next/image';
+import TotalDonorAboutPage from './TotalDonorAboutPage';
 const AboutPage = () => {
     const t = useTranslations('AboutPage');
 
@@ -116,7 +117,7 @@ const AboutPage = () => {
                                             whileInView={{ opacity: 1, y: 0 }}
                                             className="text-3xl font-black text-neutral italic leading-none"
                                         >
-                                            {t('why.metricVal')}
+                                            <TotalDonorAboutPage />
                                         </motion.h4>
                                         <Plus className="text-primary w-6 h-6 stroke-[4px] -translate-y-1" />
                                     </div>
