@@ -52,7 +52,7 @@ const LoginPage = () => {
             console.log("actual error:", err.response?.status, err.response?.data || err);
 
             if (err.response?.status === 401) {
-                setError("Login worked, but profile fetch is unauthorized.");
+                setError("Something went wrong with your credentials. Please check and try again.");
             } else {
                 setError("An error occurred. Please try again later.");
             }

@@ -209,7 +209,7 @@ const AboutPage = () => {
                             <div className="relative mb-8">
                                 <div className="w-64 h-64 md:w-90 md:h-90 rounded-[3rem] overflow-hidden bg-neutral border-[6px] border-white shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500 relative">
                                     <Image
-                                        src="/images/zihan.jpg"
+                                        src="/images/zihan.JPG"
                                         alt="Zihan"
                                         fill
                                         className="object-cover"
