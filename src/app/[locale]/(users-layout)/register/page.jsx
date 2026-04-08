@@ -9,19 +9,19 @@ import {
     User, Mail, Phone, MapPin,
     Droplets, ArrowRight, Calendar,
     Facebook, MessageCircle, CheckCircle2, HeartPulse, ShieldCheck, Lock,
-    AlertCircle, CheckCircle
+    AlertCircle, CheckCircle, Eye, EyeOff
 } from 'lucide-react';
 
 const RegisterPage = () => {
     const t = useTranslations('RegisterPage');
     const axios = useAxios();
     const router = useRouter();
-    
+    const [showPassword, setShowPassword] = useState(false);
     // --- State Management ---
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    
+
     // Combined Form State
     const [formData, setFormData] = useState({
         fullName: '',
@@ -66,7 +66,7 @@ const RegisterPage = () => {
         setFormData({
             ...formData,
             division: e.target.value,
-            district: '' 
+            district: ''
         });
     };
 
@@ -96,7 +96,7 @@ const RegisterPage = () => {
         // 2. Contact Method Validation (At least one required)
         // We check if the field has a value, regardless of whether the input is currently visible or not.
         const hasContact = formData.phoneNumber?.trim() || formData.whatsappNumber?.trim() || formData.facebookLink?.trim();
-        
+
         if (!hasContact) {
             setError("Please provide at least one contact method (Phone, WhatsApp, or Facebook).");
             setIsLoading(false);
@@ -107,7 +107,7 @@ const RegisterPage = () => {
             // 3. Prepare Payload
             const payload = {
                 ...formData,
-                lastDonation: formData.lastDonation || null, 
+                lastDonation: formData.lastDonation || null,
                 whatsappNumber: formData.whatsappNumber || null,
                 facebookLink: formData.facebookLink || null,
                 donationStatus: 'onn',
@@ -121,9 +121,9 @@ const RegisterPage = () => {
                 setSuccess("Registration Successful! Redirecting to login...");
                 // Clear form
                 setFormData({ fullName: '', email: '', password: '', division: '', district: '', bloodGroup: '', lastDonation: '', phoneNumber: '', whatsappNumber: '', facebookLink: '' });
-                
+
                 setTimeout(() => {
-                    router.push('/login'); 
+                    router.push('/login');
                 }, 2000);
             }
         } catch (error) {
@@ -198,13 +198,13 @@ const RegisterPage = () => {
                                 <label className="label font-bold text-neutral">{t('form.nameLabel')}</label>
                                 <div className="relative">
                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={18} />
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         name="fullName"
                                         value={formData.fullName}
                                         onChange={handleInputChange}
-                                        className="input input-bordered w-full pl-12 rounded-2xl focus:outline-primary border-base-200" 
-                                        placeholder={t('form.namePlaceholder')} 
+                                        className="input input-bordered w-full pl-12 rounded-2xl focus:outline-primary border-base-200"
+                                        placeholder={t('form.namePlaceholder')}
                                         required
                                     />
                                 </div>
@@ -213,34 +213,41 @@ const RegisterPage = () => {
                                 <label className="label font-bold text-neutral">{t('form.emailLabel')}</label>
                                 <div className="relative">
                                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={18} />
-                                    <input 
-                                        type="email" 
+                                    <input
+                                        type="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        className="input input-bordered w-full pl-12 rounded-2xl focus:outline-primary border-base-200" 
-                                        placeholder={t('form.emailPlaceholder')} 
+                                        className="input input-bordered w-full pl-12 rounded-2xl focus:outline-primary border-base-200"
+                                        placeholder={t('form.emailPlaceholder')}
                                         required
                                     />
                                 </div>
                             </div>
                         </div>
-                        
+
                         {/* Password Field */}
                         <div className="form-control group">
                             <label className="label font-bold text-neutral">Password</label>
                             <div className="relative">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors" size={18} />
-                                <input 
-                                    type="password" 
+                                <input
+                                    type={showPassword ? "text" : "password"}
                                     name="password"
                                     value={formData.password}
                                     onChange={handleInputChange}
-                                    className="input input-bordered w-full pl-12 rounded-2xl focus:outline-primary border-base-200" 
-                                    placeholder="Create a secure password" 
+                                    className="input input-bordered w-full pl-12 pr-12 rounded-2xl focus:outline-primary border-base-200"
+                                    placeholder="Create a secure password"
                                     required
                                     minLength={6}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
                             </div>
                         </div>
 
@@ -250,7 +257,7 @@ const RegisterPage = () => {
                                 <label className="label font-bold text-neutral text-sm">{t('form.divisionLabel')}</label>
                                 <div className="relative group">
                                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary z-10" size={18} />
-                                    <select 
+                                    <select
                                         className="select select-bordered w-full pl-12 rounded-2xl focus:outline-primary border-base-200 font-medium appearance-none"
                                         value={formData.division}
                                         onChange={handleDivisionChange}
@@ -265,10 +272,10 @@ const RegisterPage = () => {
                                 <label className="label font-bold text-neutral text-sm">{t('form.districtLabel')}</label>
                                 <div className="relative group">
                                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary z-10" size={18} />
-                                    <select 
+                                    <select
                                         className="select select-bordered w-full pl-12 rounded-2xl focus:outline-primary border-base-200 font-medium disabled:bg-gray-100 disabled:cursor-not-allowed"
                                         value={formData.district}
-                                        onChange={(e) => setFormData({...formData, district: e.target.value})}
+                                        onChange={(e) => setFormData({ ...formData, district: e.target.value })}
                                         disabled={!formData.division}
                                         required
                                     >
@@ -322,7 +329,7 @@ const RegisterPage = () => {
                         {/* Interactive Contact Buttons & Dynamic Inputs */}
                         <div className="form-control pt-4">
                             <label className="label font-bold text-neutral mb-2">{t('form.contactMethodsLabel')}</label>
-                            
+
                             {/* Toggle Buttons */}
                             <div className="grid grid-cols-3 gap-4 mb-6">
                                 {[
@@ -347,40 +354,40 @@ const RegisterPage = () => {
                                     {contacts.includes('phn') && (
                                         <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 10, opacity: 0 }} className="relative group">
                                             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" size={18} />
-                                            <input 
-                                                type="tel" 
+                                            <input
+                                                type="tel"
                                                 name="phoneNumber"
                                                 value={formData.phoneNumber}
                                                 onChange={handleInputChange}
-                                                placeholder={t('form.placeholders.phone')} 
-                                                className="input input-bordered w-full pl-12 rounded-2xl border-primary/30 bg-primary/5 font-medium" 
-                                                // No HTML 'required' here to allow flexibility
+                                                placeholder={t('form.placeholders.phone')}
+                                                className="input input-bordered w-full pl-12 rounded-2xl border-primary/30 bg-primary/5 font-medium"
+                                            // No HTML 'required' here to allow flexibility
                                             />
                                         </motion.div>
                                     )}
                                     {contacts.includes('wp') && (
                                         <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 10, opacity: 0 }} className="relative group">
                                             <MessageCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-500" size={18} />
-                                            <input 
-                                                type="tel" 
+                                            <input
+                                                type="tel"
                                                 name="whatsappNumber"
                                                 value={formData.whatsappNumber}
                                                 onChange={handleInputChange}
-                                                placeholder={t('form.placeholders.whatsapp')} 
-                                                className="input input-bordered w-full pl-12 rounded-2xl border-emerald-300 bg-emerald-50 font-medium" 
+                                                placeholder={t('form.placeholders.whatsapp')}
+                                                className="input input-bordered w-full pl-12 rounded-2xl border-emerald-300 bg-emerald-50 font-medium"
                                             />
                                         </motion.div>
                                     )}
                                     {contacts.includes('fb') && (
                                         <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 10, opacity: 0 }} className="relative group">
                                             <Facebook className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500" size={18} />
-                                            <input 
-                                                type="url" 
+                                            <input
+                                                type="url"
                                                 name="facebookLink"
                                                 value={formData.facebookLink}
                                                 onChange={handleInputChange}
-                                                placeholder={t('form.placeholders.facebook')} 
-                                                className="input input-bordered w-full pl-12 rounded-2xl border-blue-300 bg-blue-50 font-medium" 
+                                                placeholder={t('form.placeholders.facebook')}
+                                                className="input input-bordered w-full pl-12 rounded-2xl border-blue-300 bg-blue-50 font-medium"
                                             />
                                         </motion.div>
                                     )}
@@ -392,9 +399,9 @@ const RegisterPage = () => {
                         <div className="space-y-4">
                             <AnimatePresence>
                                 {error && (
-                                    <motion.div 
-                                        initial={{ opacity: 0, height: 0 }} 
-                                        animate={{ opacity: 1, height: 'auto' }} 
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
                                         exit={{ opacity: 0, height: 0 }}
                                         className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl flex items-start gap-3"
                                     >
@@ -403,9 +410,9 @@ const RegisterPage = () => {
                                     </motion.div>
                                 )}
                                 {success && (
-                                    <motion.div 
-                                        initial={{ opacity: 0, height: 0 }} 
-                                        animate={{ opacity: 1, height: 'auto' }} 
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
                                         exit={{ opacity: 0, height: 0 }}
                                         className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl flex items-start gap-3"
                                     >
@@ -415,8 +422,8 @@ const RegisterPage = () => {
                                 )}
                             </AnimatePresence>
 
-                            <button 
-                                type="submit" 
+                            <button
+                                type="submit"
                                 disabled={isLoading}
                                 className="btn btn-primary btn-lg w-full rounded-4xl text-white shadow-2xl shadow-primary/30 border-none group h-16 font-black text-lg disabled:bg-gray-300"
                             >

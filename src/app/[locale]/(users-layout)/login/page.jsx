@@ -3,8 +3,7 @@ import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion'; // Added framer-motion
-import { Mail, Lock, Eye, EyeOff, Droplets, UserPlus, ArrowRightCircle, ArrowRight, AlertCircle } from 'lucide-react'; // Added AlertCircle
-import useAxios from '@/hooks/axios/useAxios';
+import { Mail, Lock, Eye, EyeOff, Droplets, UserPlus, ArrowRightCircle, ArrowRight, AlertCircle, Loader2 } from 'lucide-react'; // Added AlertCircle
 import AuthContext from '@/hooks/AuthContext/AuthContext';
 import useAxiosSecure from '@/hooks/axiosSecure/useAxiosSecure';
 import { useRouter } from 'next/navigation';
@@ -17,8 +16,8 @@ const LoginPage = () => {
     const [password, setPassword] = useState(null);
     const [error, setError] = useState(null);
     const router = useRouter();
-    const { user, setUser, fetchUserProfile } = useContext(AuthContext);
-
+    const { setUser, fetchUserProfile } = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
     const checkError = (email, password) => {
         if (!email || !password) {
             return "Email and Password are required"; // Removed **
@@ -30,6 +29,8 @@ const LoginPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
+        if (loading) return;
+
         const errorMsg = checkError(email, password);
         if (errorMsg) {
             setError(errorMsg);
@@ -37,11 +38,12 @@ const LoginPage = () => {
         }
 
         try {
+            setLoading(true);
+
             const loginRes = await axiosSecure.post("/auth/login", { email, password });
             console.log("login success:", loginRes.data);
 
             const userData = await fetchUserProfile();
-            // console.log("profile success:", userData);
 
             setUser(userData);
             setError(null);
@@ -54,6 +56,8 @@ const LoginPage = () => {
             } else {
                 setError("An error occurred. Please try again later.");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -115,8 +119,17 @@ const LoginPage = () => {
                         </AnimatePresence>
 
                         {/* Login Btn */}
-                        <button onClick={handleLogin} className="btn btn-primary btn-lg w-full rounded-2xl text-white shadow-lg shadow-primary/20 mt-4 gap-3 border-none">
-                            <ArrowRightCircle size={22} /> {t('login.submitBtn')}
+                        <button
+                            onClick={handleLogin}
+                            className="btn btn-primary btn-lg w-full rounded-2xl text-white shadow-lg shadow-primary/20 mt-4 gap-3 border-none"
+                        >
+                            {loading ? (
+                                <Loader2 size={22} className="animate-spin" />
+                            ) : (
+                                <>
+                                    <ArrowRightCircle size={22} /> {t('login.submitBtn')}
+                                </>
+                            )}
                         </button>
                     </form>
 
