@@ -41,7 +41,31 @@ const DonationEntryForm = ({ onClose, onSave }) => {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
+    //helper functions 
+    const getLocalizedApiError = (message) => {
+        if (!message) return t('status.error');
 
+        if (message.includes('cannot be in the future')) {
+            return t('status.futureDate');
+        }
+
+        if (message.includes('Older or same-date entries are not allowed')) {
+            const match = message.match(/\(([^)]+)\)/);
+            const date = match?.[1] || '';
+            return t('status.olderOrSameDate', { date });
+        }
+
+        if (message.includes('within 2 months of the last donation')) {
+            const match = message.match(/Last donation was on (.+?)\. Next allowed date is (.+?)\./);
+            const lastDate = match?.[1] || '';
+            const nextDate = match?.[2] || '';
+            return t('status.withinTwoMonths', { lastDate, nextDate });
+        }
+
+        return message;
+    };
+
+    //handle submit
     const handleSubmit = async (e) => {
         e.preventDefault();
         setApiStatus({ type: '', message: '' });
@@ -78,11 +102,15 @@ const DonationEntryForm = ({ onClose, onSave }) => {
 
             }
         } catch (error) {
-            console.error("API Error:", error);
-            // Fallback to translated error message
+            console.error("API Error:", error.response?.data || error);
+
+            const backendMessage = Array.isArray(error.response?.data?.message)
+                ? error.response.data.message.join(', ')
+                : error.response?.data?.message;
+
             setApiStatus({
                 type: 'error',
-                message: t('status.error')
+                message: getLocalizedApiError(backendMessage)
             });
         } finally {
             setIsLoading(false);

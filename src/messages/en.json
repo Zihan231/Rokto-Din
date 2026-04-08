@@ -477,7 +477,10 @@
     },
     "status": {
       "success": "Donation record created successfully!",
-      "error": "Failed to create donation record. Please try again."
+      "error": "Failed to create donation record. Please try again.",
+      "futureDate": "Donation date cannot be in the future. Please select today or a past date.",
+      "olderOrSameDate": "Donation date must be later than your last donation date ({date}). Older or same-date entries are not allowed.",
+      "withinTwoMonths": "You cannot add a new donation within 2 months of your last donation. Last donation was on {lastDate}. Next allowed date is {nextDate}."
     }
   },
   "Loading": {
@@ -496,31 +499,31 @@
     "contact": "For assistance, contact:"
   },
   "ChangePassword": {
-  "title": "Change Password",
-  "subtitle": "Use a strong password to ensure your account's security.",
-  "currentPassword": "Current Password",
-  "currentPasswordPlaceholder": "Enter current password",
-  "forgotPassword": "Forgot password?",
-  "newPassword": "New Password",
-  "newPasswordPlaceholder": "Enter a new strong password (e.g., Hello@123)",
-  "passwordHint": "Try to use at least 8 characters and numbers.",
-  "confirmPassword": "Confirm New Password",
-  "confirmPasswordPlaceholder": "Re-enter the password",
-  "updateButton": "Update Password",
-  "errors": {
-    "emptyCurrent": "Current password can not be empty",
-    "emptyNew": "Password can not be empty",
-    "sameAsCurrent": "New password and current password can not be the same",
-    "length": "Password must be between 6 and 20 characters",
-    "regex": "Password must contain at least one uppercase letter, one lowercase letter, and one special character",
-    "emptyConfirm": "Please confirm your password",
-    "mismatch": "Passwords do not match"
+    "title": "Change Password",
+    "subtitle": "Use a strong password to ensure your account's security.",
+    "currentPassword": "Current Password",
+    "currentPasswordPlaceholder": "Enter current password",
+    "forgotPassword": "Forgot password?",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter a new strong password (e.g., Hello@123)",
+    "passwordHint": "Try to use at least 8 characters and numbers.",
+    "confirmPassword": "Confirm New Password",
+    "confirmPasswordPlaceholder": "Re-enter the password",
+    "updateButton": "Update Password",
+    "errors": {
+      "emptyCurrent": "Current password can not be empty",
+      "emptyNew": "Password can not be empty",
+      "sameAsCurrent": "New password and current password can not be the same",
+      "length": "Password must be between 6 and 20 characters",
+      "regex": "Password must contain at least one uppercase letter, one lowercase letter, and one special character",
+      "emptyConfirm": "Please confirm your password",
+      "mismatch": "Passwords do not match"
+    },
+    "status": {
+      "success": "Password changed successfully!",
+      "error": "Failed to update password. Please check your current password and try again."
+    }
   },
-  "status": {
-    "success": "Password changed successfully!",
-    "error": "Failed to update password. Please check your current password and try again."
-  }
-},
   "ForgotPassword": {
     "sideTitle": "Every donation is a story of saving a life.",
     "sideSubtitle": "Regain access to your account and continue your noble journey with us.",
