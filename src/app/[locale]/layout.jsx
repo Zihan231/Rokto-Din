@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import {NextIntlClientProvider, hasLocale} from 'next-intl';
-import {notFound} from 'next/navigation';
+import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { getMessages } from 'next-intl/server';
 import AuthProvider from "@/hooks/AuthContext/AuthProvider";
@@ -19,6 +19,15 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Rokto Din",
   description: "Blood Donation Platform",
+  icons: {
+    icon: [
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default async function RootLayout({ children, params }) {
@@ -28,7 +37,7 @@ export default async function RootLayout({ children, params }) {
   }
   const messages = await getMessages();
   return (
-    <html lang="en" data-theme="rokto-din">
+    <html lang={locale} data-theme="rokto-din">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AuthProvider>
           <NextIntlClientProvider messages={messages} >{children}</NextIntlClientProvider>
