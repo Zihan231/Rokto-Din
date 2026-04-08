@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Calendar, MapPin, Droplets, Save, X, Activity, AlertCircle, CheckCircle2 } from 'lucide-react';
 import useAxiosSecure from '@/hooks/axiosSecure/useAxiosSecure';
 import { useRouter } from 'next/navigation';
+import AuthContext from '@/hooks/AuthContext/AuthContext';
 
 const DonationEntryForm = ({ onClose, onSave }) => {
     const axiosSecure = useAxiosSecure();
@@ -18,6 +19,7 @@ const DonationEntryForm = ({ onClose, onSave }) => {
     const [apiStatus, setApiStatus] = useState({ type: '', message: '' });
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+    const { fetchUserProfile, setUser } = useContext(AuthContext);
     // Client-side validation matching the DTO
     const validateForm = () => {
         const newErrors = {};
@@ -59,6 +61,11 @@ const DonationEntryForm = ({ onClose, onSave }) => {
             const response = await axiosSecure.post('/donor/create-donation-record', payload);
 
             if (response.data?.statusCode === 201) {
+
+                const userData = await fetchUserProfile();
+                setUser(userData);
+
+
                 // Using translated success message
                 setApiStatus({ type: 'success', message: t('status.success') });
 
@@ -68,6 +75,7 @@ const DonationEntryForm = ({ onClose, onSave }) => {
                 setTimeout(() => {
                     if (onClose) onClose();
                 }, 2000);
+
             }
         } catch (error) {
             console.error("API Error:", error);

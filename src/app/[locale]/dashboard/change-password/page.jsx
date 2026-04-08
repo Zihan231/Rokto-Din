@@ -44,30 +44,32 @@ const ChangePassword = () => {
 
     // Client-side validation matching NestJS DTO
     const validateForm = () => {
-        const newErrors = {};
-        const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/;
+    const newErrors = {};
+    const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/;
 
-        if (!formData.currentPassword) {
-            newErrors.currentPassword = t('errors.emptyCurrent');
-        }
+    if (!formData.currentPassword) {
+        newErrors.currentPassword = t('errors.emptyCurrent');
+    }
 
-        if (!formData.newPassword) {
-            newErrors.newPassword = t('errors.emptyNew');
-        } else if (formData.newPassword.length < 6 || formData.newPassword.length > 20) {
-            newErrors.newPassword = t('errors.length');
-        } else if (!passRegex.test(formData.newPassword)) {
-            newErrors.newPassword = t('errors.regex');
-        }
+    if (!formData.newPassword) {
+        newErrors.newPassword = t('errors.emptyNew');
+    } else if (formData.currentPassword && formData.currentPassword === formData.newPassword) {
+        newErrors.newPassword = t('errors.sameAsCurrent');
+    } else if (formData.newPassword.length < 6 || formData.newPassword.length > 20) {
+        newErrors.newPassword = t('errors.length');
+    } else if (!passRegex.test(formData.newPassword)) {
+        newErrors.newPassword = t('errors.regex');
+    }
 
-        if (!formData.confirmPassword) {
-            newErrors.confirmPassword = t('errors.emptyConfirm');
-        } else if (formData.newPassword !== formData.confirmPassword) {
-            newErrors.confirmPassword = t('errors.mismatch');
-        }
+    if (!formData.confirmPassword) {
+        newErrors.confirmPassword = t('errors.emptyConfirm');
+    } else if (formData.newPassword !== formData.confirmPassword) {
+        newErrors.confirmPassword = t('errors.mismatch');
+    }
 
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+};
 
     const handleSubmit = async (e) => {
         e.preventDefault();
