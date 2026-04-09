@@ -135,6 +135,123 @@
     },
     "learnMore": "Learn More"
   },
+  "CalculatorPage": {
+    "metadata": {
+      "title": "Blood Donation Date Calculator | Rokto Din",
+      "description": "Check blood donation eligibility in seconds with Rokto Din. Enter your last donation date and get your next available donation date based on a 2-month interval.",
+      "keywords": "blood donation date calculator, donor eligibility checker, next blood donation date, blood donation 2 month rule, Rokto Din",
+      "ogTitle": "Blood Donation Date Calculator",
+      "ogDescription": "Find out if you can donate now and see your next blood donation date with Rokto Din's 2-month eligibility calculator."
+    },
+    "hero": {
+      "badge": "Donation Eligibility Tool",
+      "title": "Check Your Next <highlight>Blood Donation Date</highlight>",
+      "description": "Enter your last blood donation date to instantly know whether you are available for donation and when your next donation date starts."
+    },
+    "form": {
+      "premiumBadge": "Smart Donation Assistant",
+      "ruleTag": "2-Month Eligibility Rule",
+      "cardTitle": "Donation Date Calculator",
+      "cardDescription": "This calculator checks your donor availability against a 2-month waiting period and gives your next available date.",
+      "lastDateLabel": "Last Donation Date",
+      "hint": "If 2 months or more have passed since your last donation, you are considered available.",
+      "submitBtn": "Check Availability",
+      "statusTitle": "Current Donation Status",
+      "progressLabel": "Eligibility Progress (%)",
+      "daysSinceLabel": "Days Since Last Donation",
+      "nextDateLabel": "Next Available Date",
+      "availabilityLabel": "Availability",
+      "daysUnit": "days",
+      "available": "Available for donation",
+      "notAvailable": "Not available yet",
+      "remainingValue": "{days} day(s) left",
+      "availableMessage": "You can donate blood now based on the 2-month rule.",
+      "notAvailableMessage": "You need to wait <highlight>{days}</highlight> more day(s)."
+    },
+    "validation": {
+      "empty": "Please select your last donation date.",
+      "invalid": "Please enter a valid date.",
+      "future": "Last donation date cannot be in the future."
+    },
+    "seo": {
+      "tag": "Blood Donation Education",
+      "title": "Why Use a <highlight>Blood Donation Date Calculator</highlight>?",
+      "description": "A clear donation timeline helps donors stay safe and ready. Check eligibility before responding to urgent blood requests.",
+      "points": {
+        "rule": {
+          "title": "Tracks the 2-Month Rule",
+          "description": "Automatically calculates your next eligible date from the last donation date."
+        },
+        "safety": {
+          "title": "Supports Safer Donations",
+          "description": "Helps you avoid donating too early and follow a healthier donation interval."
+        },
+        "planning": {
+          "title": "Better Emergency Planning",
+          "description": "Know when you can respond to blood requests and plan your donation schedule."
+        }
+      },
+      "expanded": {
+        "title": "Complete Donation Eligibility Guide for Better Planning",
+        "intro": "Using a blood donation date calculator improves your donation consistency, protects your health, and helps you respond quickly when someone needs blood in an emergency.",
+        "points": {
+          "consistency": {
+            "title": "Consistent Donation Planning",
+            "description": "Track your next blood donation date without guessing and maintain a safe donation routine."
+          },
+          "preparedness": {
+            "title": "Emergency Readiness",
+            "description": "Know your eligibility in advance so you can react faster to urgent blood requests."
+          },
+          "safetyFirst": {
+            "title": "Donor Health First",
+            "description": "Following a proper 2-month interval supports safer donation timing for regular donors."
+          },
+          "communityImpact": {
+            "title": "Stronger Donor Community",
+            "description": "When donors track availability accurately, blood matching and donor response become more reliable."
+          }
+        }
+      },
+      "faq": {
+        "badge": "Donation Date FAQ",
+        "title": "Frequently Asked Questions About Donation Dates",
+        "description": "These common questions help new and regular donors understand how this blood donation date calculator works and why waiting periods matter.",
+        "items": {
+          "calculation": {
+            "question": "How does this blood donation date calculator work?",
+            "answer": "The calculator adds a 2-month interval to your last donation date and checks whether today is on or after that date."
+          },
+          "available": {
+            "question": "When am I considered available to donate blood again?",
+            "answer": "You are considered available when at least 2 months have passed since your last blood donation date."
+          },
+          "future": {
+            "question": "Can I enter a future date as my last donation date?",
+            "answer": "No. Future dates are blocked because your last donation date must be a real past or current date."
+          },
+          "newDonor": {
+            "question": "Can new donors use this donation date tool?",
+            "answer": "Yes. New donors can still review the eligibility rule and then register as a blood donor on Rokto Din."
+          },
+          "waitReason": {
+            "question": "Why do I need to wait 2 months between donations?",
+            "answer": "A 2-month interval helps your body recover blood volume and supports safer donation timing for regular donors."
+          },
+          "afterEligible": {
+            "question": "What should I do after becoming eligible?",
+            "answer": "If you are eligible today, you can respond to urgent blood requests, find nearby recipients, or keep your donor profile updated."
+          }
+        }
+      }
+    },
+    "cta": {
+      "title": "Need blood urgently or want to help?",
+      "description": "Find nearby donors immediately or register yourself to join the Rokto Din blood donor network.",
+      "findBtn": "Find Donors",
+      "registerBtn": "Register as a Donor"
+    }
+  },
   "HeroBanner": {
     "tagline": "Voluntary Blood Donation Saves Lives",
     "title": {

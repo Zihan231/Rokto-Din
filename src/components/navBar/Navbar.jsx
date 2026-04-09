@@ -11,6 +11,7 @@ import {
 import { RiUserSharedLine, RiLoginCircleLine, RiLogoutBoxLine, RiDashboardLine } from "react-icons/ri";
 import AuthContext from '@/hooks/AuthContext/AuthContext';
 import useAxiosSecure from '@/hooks/axiosSecure/useAxiosSecure';
+import { Calculator } from 'lucide-react';
 
 const Navbar = () => {
   const locale = useLocale();
@@ -66,10 +67,10 @@ const Navbar = () => {
       </li>
       <li>
         <Link
-          href="/blog"
-          className={`${isActive("/blog") ? "text-primary" : ""} hover:text-primary transition-colors flex items-center gap-2`}
+          href="/calculator"
+          className={`${isActive("/calculator") ? "text-primary" : ""} hover:text-primary transition-colors flex items-center gap-2`}
         >
-          <HiOutlineDocumentText className="text-xl" /> Blog
+          <Calculator className="text-xl" size={20}/> Calculator
         </Link>
       </li>
       <li>
