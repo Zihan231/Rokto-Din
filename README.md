@@ -13,14 +13,21 @@ This repository contains the Next.js frontend used for:
   - blood group
   - division
   - district
-- Localized UI with `next-intl` (`bn` default, `en` supported)
-- Cookie-based authentication flow through Next.js API routes
-- Donor dashboard:
-  - profile management
-  - donation entry and history
-  - availability toggle
-  - downloadable donation history PDF
-- Responsive UI built with Tailwind CSS + DaisyUI + Framer Motion
+- Bilingual UI with `next-intl` localization (`bn` default, `en` supported)
+- Secure donor authentication via Next.js API proxy routes:
+  - registration
+  - login
+  - logout
+  - password recovery
+  - protected dashboard routes
+- Donor dashboard capabilities:
+  - profile management and visibility status
+  - donation record entry with validation
+  - donation history with search, sort, and pagination
+  - downloadable donation history PDF report
+- Blood donation eligibility calculator with next eligible donation date, progress timeline, and validation rules
+- Site statistics component displaying total donors and donations
+- Responsive, accessible UI with Tailwind CSS, DaisyUI, and Framer Motion animations
 
 ## Tech Stack
 
